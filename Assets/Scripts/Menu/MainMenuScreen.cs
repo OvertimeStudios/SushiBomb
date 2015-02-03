@@ -45,7 +45,7 @@ public class MainMenuScreen : MonoBehaviour
 
 	public void OnPlayClicked()
 	{
-
+		Application.LoadLevel ("Level Select");
 	}
 
 	public void OnOptionsClicked()
@@ -116,6 +116,12 @@ public class MainMenuScreen : MonoBehaviour
 			
 			credits.transform.FindChild ("Menu").gameObject.SetActive (false);
 		}
+	}
+
+	public void ResetData()
+	{
+		//TODO: confirmation popup
+		PlayerPrefs.DeleteAll ();
 	}
 
 	public void OnSoundFXChanged()

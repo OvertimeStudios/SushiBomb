@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:d76a8daa275e1b4494fcde978350bc7c$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="LevelSelect.png" width="1024" height="2048">
+    <sprite n="Agua" x="2" y="2" w="960" h="640"/>
+    <sprite n="BarcoAfundado" x="2" y="790" w="268" h="99"/>
+    <sprite n="Close" x="272" y="790" w="75" h="71"/>
+    <sprite n="Coin" x="964" y="2" w="39" h="39"/>
+    <sprite n="Ilha" x="702" y="644" w="300" h="130"/>
+    <sprite n="Ilha1" x="702" y="776" w="285" h="170"/>
+    <sprite n="Ilha2" x="349" y="844" w="237" h="123"/>
+    <sprite n="LevelLocked" x="191" y="994" w="148" h="100"/>
+    <sprite n="LevelUnlocked" x="191" y="891" w="149" h="101"/>
+    <sprite n="Navio0001" x="2" y="1071" w="187" h="178"/>
+    <sprite n="Navio0002" x="342" y="969" w="187" h="178"/>
+    <sprite n="Navio0003" x="588" y="948" w="187" h="178"/>
+    <sprite n="Navio0004" x="588" y="948" w="187" h="178"/>
+    <sprite n="Navio0005" x="2" y="891" w="187" h="178"/>
+    <sprite n="Nuvem1" x="2" y="644" w="363" h="144"/>
+    <sprite n="Nuvem2" x="367" y="644" w="333" h="198"/>
+</TextureAtlas>
