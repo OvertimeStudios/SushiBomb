@@ -37,4 +37,12 @@ public class Level : MonoBehaviour
 			}
 		}
 	}
+
+	public void Select()
+	{
+		Global.currentWorld = Global.Worlds.World1;
+		Global.currentLevel = Global.Levels.Level1;
+
+		Application.LoadLevel ("World " + (int)Global.Worlds.World1);
+	}
 }
