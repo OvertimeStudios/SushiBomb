@@ -63,4 +63,28 @@ public class Global : MonoBehaviour
 		else
 			return 0;
 	}
+
+	public enum Worlds
+	{
+		World1 = 1,
+		World2,
+		World3,
+	}
+
+	public enum Levels
+	{
+		Level1 = 1,
+		Level2,
+		Level3,
+		Level4,
+		Level5,
+		Level6,
+		Level7,
+		Level8,
+		Level9,
+		Level10
+	}
+
+	public static Worlds currentWorld;
+	public static Levels currentLevel;
 }
