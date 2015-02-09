@@ -186,6 +186,7 @@
      <Compile Include="Assets\Scripts\Menu\OnAnimationFinished.cs" />
      <Compile Include="Assets\Scripts\Misc\Global.cs" />
      <Compile Include="Assets\Scripts\Worlds\Character.cs" />
+     <Compile Include="Assets\Scripts\Worlds\Chest.cs" />
      <Compile Include="Assets\Scripts\Worlds\GameController.cs" />
      <Compile Include="Assets\Scripts\Worlds\Hosso.cs" />
      <Compile Include="Assets\Scripts\Worlds\Wasabi.cs" />

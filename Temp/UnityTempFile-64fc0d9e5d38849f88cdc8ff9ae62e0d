@@ -178,6 +178,7 @@
 'Assets/Scripts/Menu/OnAnimationFinished.cs'
 'Assets/Scripts/Misc/Global.cs'
 'Assets/Scripts/Worlds/Character.cs'
+'Assets/Scripts/Worlds/Chest.cs'
 'Assets/Scripts/Worlds/GameController.cs'
 'Assets/Scripts/Worlds/Hosso.cs'
 'Assets/Scripts/Worlds/Wasabi.cs'

@@ -12,6 +12,7 @@ public class Wasabi : MonoBehaviour
 	private Transform myTransform;
 
 	private Character[] charactersInGame;
+	private Chest[] chestsInGame;
 
 	#region singleton
 	private static Wasabi instance;
@@ -33,19 +34,22 @@ public class Wasabi : MonoBehaviour
 		spRenderer.enabled = false;
 
 		charactersInGame = GameController.Instance.currentWorld.GetComponentsInChildren<Character> ();
+		chestsInGame = GameController.Instance.currentWorld.GetComponentsInChildren<Chest> ();
 	}
 	
-	// Update is called once per frame
-	void FixedUpdate () 
+	void Update()
 	{
 		#region input
 		if(Input.GetMouseButtonDown(0))
 			OnClick();
-
+		
 		if(Input.GetMouseButtonUp(0))
 			StartExplosion();
 		#endregion
+	}
 
+	void FixedUpdate () 
+	{
 		if(spRenderer.enabled && !myAnimator.GetBool("explode"))
 		{
 			Vector3 pos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
@@ -71,6 +75,11 @@ public class Wasabi : MonoBehaviour
 		{
 			character.ShowAim();
 		}
+
+		foreach(Chest chest in chestsInGame)
+		{
+			chest.WasabiOn();
+		}
 	}
 
 	void StartExplosion()
@@ -85,7 +94,10 @@ public class Wasabi : MonoBehaviour
 
 	public void Explode()
 	{
-		myAnimator.Play ("Explodindo");
+		foreach(Character character in charactersInGame)
+		{
+			character.Explode(myTransform.position, force);
+		}
 	}
 
 	public void FinishExplosion()
