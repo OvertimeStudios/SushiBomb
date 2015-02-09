@@ -105,4 +105,10 @@ public class Chest : MonoBehaviour
 		//TODO: Call end game popup
 		Debug.Log ("Call end game popup");
 	}
+
+	private void Reset()
+	{
+		animator.SetBool ("CanClose", false);
+		ShowChest ();
+	}
 }

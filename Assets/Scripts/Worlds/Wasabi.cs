@@ -66,6 +66,7 @@ public class Wasabi : MonoBehaviour
 
 	void StartWasabi()
 	{
+		if(GameController.gameOver) return;
 		if(spRenderer.enabled) return;
 		if(GameController.AreSushisMoving) return;
 

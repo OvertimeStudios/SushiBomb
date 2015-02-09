@@ -8,7 +8,6 @@ public class GameController : MonoBehaviour
 	public static event Action OnGameComplete;
 	public static event Action OnGameOver;
 	public static event Action OnAllCharactersStopMoving;
-	public static event Action OnReset;
 	#endregion
 
 	[HideInInspector]
@@ -22,6 +21,7 @@ public class GameController : MonoBehaviour
 	private static int sushisMoving;
 	private static int sushisFallen;
 	private static Character[] charactersInGame;
+	public static bool gameOver;
 
 	#region singleton
 	private static GameController instance;
@@ -51,6 +51,7 @@ public class GameController : MonoBehaviour
 
 		sushisMoving = 0;
 		sushisFallen = 0;
+		gameOver = false;
 
 		//TODO: this variables must be setted on Level Select scene
 		Global.currentWorld = Global.Worlds.World1;
@@ -88,6 +89,8 @@ public class GameController : MonoBehaviour
 
 			if(Chest.SushisInside >= sushisToWin)
 			{
+				gameOver = true;
+
 				if(OnGameComplete != null)
 					OnGameComplete();
 			}
@@ -106,11 +109,18 @@ public class GameController : MonoBehaviour
 
 		if(RemainingSushis < sushisToWin)
 		{
-			sushisMoving = 0;
-			sushisFallen = 0;
+			Reset ();
 
-			if(OnReset != null)
-				OnReset();
+			if(OnGameOver != null)
+				OnGameOver();
 		}
+	}
+
+	private void Reset()
+	{
+		sushisMoving = 0;
+		sushisFallen = 0;
+
+		gameOver = false;
 	}
 }

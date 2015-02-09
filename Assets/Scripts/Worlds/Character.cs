@@ -49,7 +49,7 @@ public class Character : MonoBehaviour
 		Wasabi.OnMoving += CalculateAim;
 		Wasabi.OnExplode += Explode;
 
-		GameController.OnReset += Reset;
+		GameController.OnGameOver += Reset;
 	}
 
 	void OnDisable()
@@ -59,7 +59,7 @@ public class Character : MonoBehaviour
 		Wasabi.OnMoving -= CalculateAim;
 		Wasabi.OnExplode -= Explode;
 
-		GameController.OnReset += Reset;
+		GameController.OnGameOver -= Reset;
 	}
 
 	void Update()
@@ -176,10 +176,12 @@ public class Character : MonoBehaviour
 	//called on Wasabi.cs
 	public void Explode(Vector3 wasabiPosition, float force)
 	{
+		myRigidbody2D.velocity = ApplyVelocity (wasabiPosition, force);
+
+		if(myRigidbody2D.velocity == Vector2.zero) return;
+
 		manualRotation = true;
 		moving = true;
-
-		myRigidbody2D.velocity = ApplyVelocity (wasabiPosition, force);
 
 		//call delegate
 		if(OnCharacterStartMoving != null)
@@ -221,7 +223,10 @@ public class Character : MonoBehaviour
 
 		relativeForce = Mathf.Clamp (relativeForce, 0f, force);
 
-		return new Vector2 (Mathf.Cos (angle) * relativeForce, Mathf.Sin (angle) * relativeForce);
+		if(relativeForce < Wasabi.Instance.minForce)
+			return Vector2.zero;
+		else
+			return new Vector2 (Mathf.Cos (angle) * relativeForce, Mathf.Sin (angle) * relativeForce);
 	}
 
 	private void Reset()
