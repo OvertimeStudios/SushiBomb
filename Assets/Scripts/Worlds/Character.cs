@@ -1,18 +1,32 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 public class Character : MonoBehaviour 
 {
+	#region Events
+	public static event Action<GameObject> OnCharacterEnter;
+	public static event Action<GameObject> OnCharacterExit;
+	public static event Action OnCharacterStartMoving;
+	public static event Action OnCharacterStopMoving;
+	public static event Action OnOutOfScreen;
+	#endregion
+
 	private Transform trajectoryHolder;
 	
-	private bool launched = false;
+	private bool manualRotation = false;
+	private float initialRotation = -90f;
+	private bool moving = false;
 	
-	public byte spacing = 6;
+	public byte trajectorySpacing = 6;
 	private LayerMask layerMask;
 
 	//optimizations
 	private Transform myTransform;
 	private Rigidbody2D myRigidbody2D;
+
+	//Reset
+	private Vector3 initialPosition;
 
 	// Use this for initialization
 	protected virtual void Start () 
@@ -20,19 +34,68 @@ public class Character : MonoBehaviour
 		myTransform = transform;
 		myRigidbody2D = rigidbody2D;
 
+		initialPosition = myTransform.position;
+
 		trajectoryHolder = transform.FindChild ("Trajectory");
 		layerMask = LayerMask.NameToLayer ("Characters");
 
 		HideAim ();
 	}
 
+	void OnEnable()
+	{
+		Wasabi.OnClick += ShowAim;
+		Wasabi.OnRelease += HideAim;
+		Wasabi.OnMoving += CalculateAim;
+		Wasabi.OnExplode += Explode;
+
+		GameController.OnReset += Reset;
+	}
+
+	void OnDisable()
+	{
+		Wasabi.OnClick -= ShowAim;
+		Wasabi.OnRelease -= HideAim;
+		Wasabi.OnMoving -= CalculateAim;
+		Wasabi.OnExplode -= Explode;
+
+		GameController.OnReset += Reset;
+	}
+
 	void Update()
 	{
-		if(launched)
+		if(manualRotation)
 		{
-			Vector3 euler = new Vector3(0f, 0f, (Mathf.Atan2(myRigidbody2D.velocity.y, myRigidbody2D.velocity.x) - 90f) * Mathf.Rad2Deg);
-			Debug.Log(euler);
+			Vector3 euler = new Vector3(0f, 0f, (Mathf.Atan2(myRigidbody2D.velocity.y, myRigidbody2D.velocity.x) + initialRotation) * Mathf.Rad2Deg);
 			myTransform.rotation = Quaternion.Euler(euler);
+		}
+
+		if(moving)
+		{
+			//OnCharacterStopMoving
+			if(myRigidbody2D.velocity.magnitude == 0)
+			{
+				moving = false;
+
+				initialRotation = myTransform.rotation.eulerAngles.z;
+
+				//call delegate
+				if(OnCharacterStopMoving != null)
+					OnCharacterStopMoving();
+			}
+
+			//OnOutOfScreen
+			Vector3 screenPos = Camera.main.WorldToScreenPoint(myTransform.position);
+			if(screenPos.x < -20f || screenPos.y < -20f)
+			{
+				moving = false;
+
+				gameObject.SetActive(false);
+
+				//call delegate
+				if(OnOutOfScreen != null)
+					OnOutOfScreen();
+			}
 		}
 	}
 
@@ -70,7 +133,7 @@ public class Character : MonoBehaviour
 			
 			if(!hit)
 			{
-				for(byte j = 0; j < spacing; j++)
+				for(byte j = 0; j < trajectorySpacing; j++)
 				{
 					Vector2 prePosition = position;
 					
@@ -110,16 +173,43 @@ public class Character : MonoBehaviour
 		}
 	}
 
+	//called on Wasabi.cs
 	public void Explode(Vector3 wasabiPosition, float force)
 	{
-		launched = true;
+		manualRotation = true;
+		moving = true;
 
 		myRigidbody2D.velocity = ApplyVelocity (wasabiPosition, force);
+
+		//call delegate
+		if(OnCharacterStartMoving != null)
+			OnCharacterStartMoving();
 	}
 
+	//when colliding to cenario, deactivate manual rotation
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		launched = false;
+		manualRotation = false;
+	}
+
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if(col.gameObject.name == "Chest")
+		{
+			//call delegate
+			if(OnCharacterEnter != null)
+				OnCharacterEnter(gameObject);
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D col)
+	{
+		if(col.gameObject.name == "Chest")
+		{
+			//call delegate
+			if(OnCharacterExit != null)
+				OnCharacterExit(gameObject);
+		}
 	}
 
 	private Vector2 ApplyVelocity(Vector3 wasabiPosition, float force)
@@ -132,5 +222,16 @@ public class Character : MonoBehaviour
 		relativeForce = Mathf.Clamp (relativeForce, 0f, force);
 
 		return new Vector2 (Mathf.Cos (angle) * relativeForce, Mathf.Sin (angle) * relativeForce);
+	}
+
+	private void Reset()
+	{
+		myTransform.position = initialPosition;
+		myTransform.rotation = Quaternion.identity;
+		initialRotation = -90f;
+		moving = false;
+		manualRotation = false;
+
+		gameObject.SetActive (true);
 	}
 }

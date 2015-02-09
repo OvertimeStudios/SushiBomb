@@ -1,43 +1,108 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Chest : MonoBehaviour 
 {
 	private GameObject back;
 	private GameObject front;
-	private GameObject animation;
+	private GameObject anim;
 	private Animator animator;
+	
+	private static List<GameObject> sushisInside;
+
+	#region get/set
+	public static int SushisInside
+	{
+		get { return sushisInside.Count; }
+	}
+	#endregion
 
 	// Use this for initialization
 	void Start () 
 	{
+		sushisInside = new List<GameObject> ();
+
 		back = transform.FindChild ("back").gameObject;
 		front = transform.FindChild ("front").gameObject;
-		animation = transform.FindChild ("animation").gameObject;
-		animator = animation.GetComponent<Animator> ();
+		anim = transform.FindChild ("animation").gameObject;
+		animator = anim.GetComponent<Animator> ();
 
 		back.SetActive (false);
 		front.SetActive (false);
-		animation.SetActive (true);
+		anim.SetActive (true);
 	}
 
-	public void WasabiOn()
+	/// <summary>
+	/// Stop idle animation and show static chest with alpha
+	/// </summary>
+	public void ShowChest()
 	{
 		back.SetActive (true);
 		front.SetActive (true);
-		animation.SetActive (false);
+		anim.SetActive (false);
 	}
 
-	public void WasabiOff()
+	/// <summary>
+	/// Play idle animation if no sushis are inside
+	/// </summary>
+	public void PlayIdleAnimation()
+	{
+		if(SushisInside > 0) return;
+
+		back.SetActive (false);
+		front.SetActive (false);
+		anim.SetActive (true);
+	}
+
+	void OnEnable()
+	{
+		Character.OnCharacterEnter += OnSushiInside;
+		Character.OnCharacterExit += OnSushiOutside;
+
+		GameController.OnGameComplete += Close;
+		GameController.OnAllCharactersStopMoving += PlayIdleAnimation;
+
+		Wasabi.OnClick += ShowChest;
+	}
+
+	void OnDisable()
+	{
+		Character.OnCharacterEnter -= OnSushiInside;
+		Character.OnCharacterExit -= OnSushiOutside;
+
+		GameController.OnGameComplete -= Close;
+		GameController.OnAllCharactersStopMoving -= PlayIdleAnimation;
+
+		Wasabi.OnClick -= ShowChest;
+	}
+
+	public void OnSushiInside(GameObject sushi)
+	{
+		sushisInside.Add (sushi);
+	}
+
+	public void OnSushiOutside(GameObject sushi)
+	{
+		sushisInside.Remove (sushi);
+	}
+
+	/// <summary>
+	/// Run animation to close the chest
+	/// </summary>
+	public void Close()
 	{
 		back.SetActive (false);
 		front.SetActive (false);
-		animation.SetActive (true);
+		anim.SetActive (true);
+
+		animator.SetBool ("CanClose", true);
 	}
-	
-	// Update is called once per frame
-	void Update () 
+
+	//called in the end of Chest Closing animation as an event
+	public void ChestClosed()
 	{
-		
+		//TODO: Call end game popup
+		Debug.Log ("Call end game popup");
 	}
 }

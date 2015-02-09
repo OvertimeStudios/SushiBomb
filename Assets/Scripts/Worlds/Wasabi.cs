@@ -1,8 +1,16 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 public class Wasabi : MonoBehaviour 
 {
+	#region events
+	public static event Action OnClick;
+	public static event Action OnRelease;
+	public static event Action<Vector3, float> OnMoving;
+	public static event Action<Vector3, float> OnExplode;
+	#endregion
+
 	public float force = 10f;
 	public float minForce = 4f;
 
@@ -10,9 +18,6 @@ public class Wasabi : MonoBehaviour
 	private SpriteRenderer spRenderer;
 	private Animator myAnimator;
 	private Transform myTransform;
-
-	private Character[] charactersInGame;
-	private Chest[] chestsInGame;
 
 	#region singleton
 	private static Wasabi instance;
@@ -32,16 +37,13 @@ public class Wasabi : MonoBehaviour
 		myTransform = transform;
 
 		spRenderer.enabled = false;
-
-		charactersInGame = GameController.Instance.currentWorld.GetComponentsInChildren<Character> ();
-		chestsInGame = GameController.Instance.currentWorld.GetComponentsInChildren<Chest> ();
 	}
 	
 	void Update()
 	{
 		#region input
 		if(Input.GetMouseButtonDown(0))
-			OnClick();
+			StartWasabi();
 		
 		if(Input.GetMouseButtonUp(0))
 			StartExplosion();
@@ -56,48 +58,43 @@ public class Wasabi : MonoBehaviour
 			pos.z = 0;
 			myTransform.position = pos;
 
-			foreach(Character character in charactersInGame)
-			{
-				character.CalculateAim(myTransform.position, force);
-			}
+			//call delegate
+			if(OnMoving != null)
+				OnMoving(pos, force);
 		}
 	}
 
-	void OnClick()
+	void StartWasabi()
 	{
 		if(spRenderer.enabled) return;
+		if(GameController.AreSushisMoving) return;
+
+		//call delegate
+		if(OnClick != null)
+			OnClick ();
 
 		spRenderer.enabled = true;
 
 		myAnimator.Play ("Aparecendo");
-
-		foreach(Character character in charactersInGame)
-		{
-			character.ShowAim();
-		}
-
-		foreach(Chest chest in chestsInGame)
-		{
-			chest.WasabiOn();
-		}
 	}
 
 	void StartExplosion()
-	{
-		foreach(Character character in charactersInGame)
-		{
-			character.HideAim();
-		}
+	{		
+		if(!spRenderer.enabled) return;
+		if(GameController.AreSushisMoving) return;
+
+		//call delegate
+		if(OnRelease != null)
+			OnRelease();
 
 		myAnimator.SetBool ("explode", true);
 	}
 
 	public void Explode()
 	{
-		foreach(Character character in charactersInGame)
-		{
-			character.Explode(myTransform.position, force);
-		}
+		//call delegate
+		if(OnExplode != null)
+			OnExplode(myTransform.position, force);
 	}
 
 	public void FinishExplosion()
