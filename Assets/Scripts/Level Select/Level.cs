@@ -41,6 +41,7 @@ public class Level : MonoBehaviour
 	public void Select()
 	{
 		if(LevelSelectController.IsNavioMoving) return;
+		if(locked.activeSelf) return;
 
 		string levelName = gameObject.name;
 		int level = int.Parse(levelName.Substring (levelName.Length - 1, 1));

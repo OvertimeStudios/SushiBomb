@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour
 	#endregion
 
 	// Use this for initialization
-	void Awake () 
+	void Start () 
 	{
 		instance = this;
 
