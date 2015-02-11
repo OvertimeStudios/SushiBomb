@@ -8,6 +8,8 @@ public class Chest : MonoBehaviour
 	private GameObject front;
 	private GameObject anim;
 	private Animator animator;
+
+	private Vector3 initialPosition;
 	
 	private static List<GameObject> sushisInside;
 
@@ -19,7 +21,7 @@ public class Chest : MonoBehaviour
 	#endregion
 
 	// Use this for initialization
-	void Start () 
+	void Awake () 
 	{
 		sushisInside = new List<GameObject> ();
 
@@ -28,9 +30,35 @@ public class Chest : MonoBehaviour
 		anim = transform.FindChild ("animation").gameObject;
 		animator = anim.GetComponent<Animator> ();
 
+		initialPosition = transform.position;
+
 		back.SetActive (false);
 		front.SetActive (false);
 		anim.SetActive (true);
+	}
+
+	void OnEnable()
+	{
+		Character.OnCharacterEnter += OnSushiInside;
+		Character.OnCharacterExit += OnSushiOutside;
+		
+		GameController.OnGameComplete += Close;
+		GameController.OnAllCharactersStopMoving += PlayIdleAnimation;
+		GameController.OnGameOver += Reset;
+		
+		Wasabi.OnClick += ShowChest;
+	}
+	
+	void OnDisable()
+	{
+		Character.OnCharacterEnter -= OnSushiInside;
+		Character.OnCharacterExit -= OnSushiOutside;
+		
+		GameController.OnGameComplete -= Close;
+		GameController.OnAllCharactersStopMoving -= PlayIdleAnimation;
+		GameController.OnGameOver -= Reset;
+		
+		Wasabi.OnClick -= ShowChest;
 	}
 
 	/// <summary>
@@ -53,28 +81,6 @@ public class Chest : MonoBehaviour
 		back.SetActive (false);
 		front.SetActive (false);
 		anim.SetActive (true);
-	}
-
-	void OnEnable()
-	{
-		Character.OnCharacterEnter += OnSushiInside;
-		Character.OnCharacterExit += OnSushiOutside;
-
-		GameController.OnGameComplete += Close;
-		GameController.OnAllCharactersStopMoving += PlayIdleAnimation;
-
-		Wasabi.OnClick += ShowChest;
-	}
-
-	void OnDisable()
-	{
-		Character.OnCharacterEnter -= OnSushiInside;
-		Character.OnCharacterExit -= OnSushiOutside;
-
-		GameController.OnGameComplete -= Close;
-		GameController.OnAllCharactersStopMoving -= PlayIdleAnimation;
-
-		Wasabi.OnClick -= ShowChest;
 	}
 
 	public void OnSushiInside(GameObject sushi)
@@ -104,11 +110,18 @@ public class Chest : MonoBehaviour
 	{
 		//TODO: Call end game popup
 		Debug.Log ("Call end game popup");
+
+		HUD.Instance.PlayVictoryAnimation ();
 	}
 
 	private void Reset()
 	{
 		animator.SetBool ("CanClose", false);
-		ShowChest ();
+
+		back.SetActive (false);
+		front.SetActive (false);
+		anim.SetActive (true);
+
+		transform.position = initialPosition;
 	}
 }

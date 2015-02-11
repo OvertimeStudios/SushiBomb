@@ -8,4 +8,9 @@ public class AnimationEvents : MonoBehaviour
 	{
 		GetComponentInParent<Chest> ().ChestClosed ();
 	}
+
+	public void VictoryFinished()
+	{
+		HUD.Instance.PlayPlacaAnimation (false);
+	}
 }

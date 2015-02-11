@@ -69,6 +69,7 @@ public class Wasabi : MonoBehaviour
 		if(GameController.gameOver) return;
 		if(spRenderer.enabled) return;
 		if(GameController.AreSushisMoving) return;
+		if(GameController.IsPaused) return;
 
 		//call delegate
 		if(OnClick != null)
@@ -80,15 +81,21 @@ public class Wasabi : MonoBehaviour
 	}
 
 	void StartExplosion()
-	{		
+	{
 		if(!spRenderer.enabled) return;
 		if(GameController.AreSushisMoving) return;
+		if(GameController.IsPaused) return;
 
 		//call delegate
 		if(OnRelease != null)
 			OnRelease();
 
 		myAnimator.SetBool ("explode", true);
+	}
+
+	public void Stop()
+	{
+		FinishExplosion ();
 	}
 
 	public void Explode()
@@ -102,5 +109,7 @@ public class Wasabi : MonoBehaviour
 	{
 		myAnimator.SetBool ("explode", false);
 		spRenderer.enabled = false;
+
+		myAnimator.Play ("Aparecendo");
 	}
 }

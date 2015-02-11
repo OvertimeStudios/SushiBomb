@@ -64,6 +64,24 @@ public class Global : MonoBehaviour
 			return 0;
 	}
 
+	public static void LevelComplete(int world, int level, int coins)
+	{
+		if(levels == null)
+			LoadValues();
+
+		//unlock next level
+		string key = "level" + world + "_" + (level + 1);
+
+		PlayerPrefs.SetInt (key, 1);
+		Global.levels [key] = 1;
+
+		//unlock level coins
+		key = "coins" + world + "_" + level;
+
+		PlayerPrefs.SetInt (key, Mathf.Max (PlayerPrefs.GetInt (key), coins));
+		Global.coins [key] = Mathf.Max (PlayerPrefs.GetInt (key), coins);
+	}
+
 	public enum Worlds
 	{
 		World1 = 1,

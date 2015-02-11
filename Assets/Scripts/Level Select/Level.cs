@@ -40,9 +40,14 @@ public class Level : MonoBehaviour
 
 	public void Select()
 	{
-		Global.currentWorld = Global.Worlds.World1;
-		Global.currentLevel = Global.Levels.Level1;
+		if(LevelSelectController.IsNavioMoving) return;
 
-		Application.LoadLevel ("World " + (int)Global.Worlds.World1);
+		string levelName = gameObject.name;
+		int level = int.Parse(levelName.Substring (levelName.Length - 1, 1));
+
+		Global.currentWorld = Global.Worlds.World1;
+		Global.currentLevel = (Global.Levels)level;
+
+		LevelSelectController.Instance.TweenNavio ();
 	}
 }

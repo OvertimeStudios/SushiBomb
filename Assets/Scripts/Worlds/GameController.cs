@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
 	private static int sushisFallen;
 	private static Character[] charactersInGame;
 	public static bool gameOver;
+	public static bool paused;
 
 	#region singleton
 	private static GameController instance;
@@ -42,21 +43,32 @@ public class GameController : MonoBehaviour
 	{
 		get { return  charactersInGame.Length - sushisFallen; }
 	}
+
+	public static bool IsPaused
+	{
+		get { return paused; }
+	}
 	#endregion
 
 	// Use this for initialization
-	void Start () 
+	void Awake () 
 	{
 		instance = this;
 
 		sushisMoving = 0;
 		sushisFallen = 0;
 		gameOver = false;
+		paused = false;
 
-		//TODO: this variables must be setted on Level Select scene
-		Global.currentWorld = Global.Worlds.World1;
-		Global.currentLevel = Global.Levels.Level1;
+		Debug.Log (Global.currentWorld);
+		Debug.Log (Global.currentLevel);
 
+		if (Global.currentWorld == 0)
+		{
+			Global.currentWorld = Global.Worlds.World1;
+			Global.currentLevel = Global.Levels.Level1;
+		}
+		
 		currentWorld = GameObject.Find("Levels").transform.FindChild ("Level " + (int)Global.currentLevel).transform;
 
 		currentWorld.gameObject.SetActive (true);
@@ -91,6 +103,9 @@ public class GameController : MonoBehaviour
 			{
 				gameOver = true;
 
+				//TODO: coins conditions for each level
+				Global.LevelComplete((int)Global.currentWorld, (int)Global.currentLevel, 1);
+
 				if(OnGameComplete != null)
 					OnGameComplete();
 			}
@@ -110,17 +125,18 @@ public class GameController : MonoBehaviour
 		if(RemainingSushis < sushisToWin)
 		{
 			Reset ();
-
-			if(OnGameOver != null)
-				OnGameOver();
 		}
 	}
 
-	private void Reset()
+	public void Reset()
 	{
 		sushisMoving = 0;
 		sushisFallen = 0;
+		paused = false;
 
 		gameOver = false;
+
+		if(OnGameOver != null)
+			OnGameOver();
 	}
 }

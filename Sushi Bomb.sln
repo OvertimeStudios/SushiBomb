@@ -1,0 +1,45 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{CAE3C814-FA1F-F906-0B6F-80C808D9A6CE}") = "Sushi Bomb", "Assembly-CSharp.csproj", "{C3673B8F-FD98-FD2A-A851-C26F23733296}"
+EndProject
+Project("{CAE3C814-FA1F-F906-0B6F-80C808D9A6CE}") = "Sushi Bomb", "Assembly-CSharp-Editor.csproj", "{E39ACE20-EDB2-0AB5-D414-97A62DDF856B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3673B8F-FD98-FD2A-A851-C26F23733296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3673B8F-FD98-FD2A-A851-C26F23733296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3673B8F-FD98-FD2A-A851-C26F23733296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3673B8F-FD98-FD2A-A851-C26F23733296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E39ACE20-EDB2-0AB5-D414-97A62DDF856B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E39ACE20-EDB2-0AB5-D414-97A62DDF856B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E39ACE20-EDB2-0AB5-D414-97A62DDF856B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E39ACE20-EDB2-0AB5-D414-97A62DDF856B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+									GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabWidth = 4
+		$3.EolMarker = Unix
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+	EndGlobalSection
+
+EndGlobal

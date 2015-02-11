@@ -182,6 +182,7 @@
      <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
      <Compile Include="Assets\Scripts\Level Select\Level.cs" />
+     <Compile Include="Assets\Scripts\Level Select\LevelSelectController.cs" />
      <Compile Include="Assets\Scripts\Menu\MainMenuScreen.cs" />
      <Compile Include="Assets\Scripts\Menu\OnAnimationFinished.cs" />
      <Compile Include="Assets\Scripts\Misc\AnimationEvents.cs" />
@@ -189,6 +190,7 @@
      <Compile Include="Assets\Scripts\Worlds\Character.cs" />
      <Compile Include="Assets\Scripts\Worlds\Chest.cs" />
      <Compile Include="Assets\Scripts\Worlds\GameController.cs" />
+     <Compile Include="Assets\Scripts\Worlds\HUD.cs" />
      <Compile Include="Assets\Scripts\Worlds\Hosso.cs" />
      <Compile Include="Assets\Scripts\Worlds\Wasabi.cs" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Depth Cutout.shader" />
