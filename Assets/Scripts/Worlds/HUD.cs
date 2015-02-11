@@ -15,6 +15,8 @@ public class HUD : MonoBehaviour
 	private GameObject black;
 	private GameObject placa;
 	private GameObject pause;
+	private GameObject resume;
+	private GameObject nextLevel;
 	private GameObject victory;
 
 	private GameObject topLeft;
@@ -32,6 +34,8 @@ public class HUD : MonoBehaviour
 		black = transform.FindChild ("Center").FindChild ("black").gameObject;
 		placa = transform.FindChild ("Center").FindChild ("Placa").gameObject;
 		pause = placa.transform.FindChild ("Pause").gameObject;
+		resume = placa.transform.FindChild ("Resume").gameObject;
+		nextLevel = placa.transform.FindChild ("Next Level").gameObject;
 		victory = transform.FindChild ("Center").FindChild ("Victory").gameObject;
 
 		UpdateSushisWanted (null);
@@ -109,6 +113,13 @@ public class HUD : MonoBehaviour
 	{
 		Application.LoadLevel ("MainMenu");
 	}
+
+	public void OnNextLevel()
+	{
+		LevelSelectController.moveToNextLevel = true;
+
+		Application.LoadLevel ("Level Select");
+	}
 	#endregion
 
 	IEnumerator StopWasabi()
@@ -126,6 +137,8 @@ public class HUD : MonoBehaviour
 	public void PlayPlacaAnimation(bool withPause)
 	{
 		pause.SetActive (withPause);
+		resume.SetActive (withPause);
+		nextLevel.SetActive (!withPause);
 
 		string anim = (placa.transform.position.y > 1f) ? "PlacaIn" : "PlacaOut";
 		placa.animation.Play (anim);

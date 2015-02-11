@@ -7,7 +7,7 @@ public class LevelSelectController : MonoBehaviour
 
 	private GameObject currentWorld;
 
-	public static int moveToLevel;
+	public static bool moveToNextLevel;
 
 	private static bool navioMoving;
 
@@ -48,9 +48,18 @@ public class LevelSelectController : MonoBehaviour
 
 		navio.transform.position = currentLevel.FindChild ("Waypoint").position;
 
-		if(moveToLevel > 0)
+		if(moveToNextLevel)
 		{
-			//TODO: move to next level
+			moveToNextLevel = false;
+
+			int nextLevel = (int)Global.currentLevel + 1;
+
+			if(nextLevel <= currentWorld.transform.FindChild("Levels").childCount)
+			{
+				Global.currentLevel = (Global.Levels)(nextLevel);
+
+				TweenNavio();
+			}
 		}
 	}
 
@@ -79,7 +88,7 @@ public class LevelSelectController : MonoBehaviour
 
 	public void LoadLevel()
 	{
-		Application.LoadLevel ("World " + (int)Global.Worlds.World1);
+		Application.LoadLevel ("World " + (int)Global.currentWorld);
 	}
 
 }
