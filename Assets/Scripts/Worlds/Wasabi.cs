@@ -19,6 +19,18 @@ public class Wasabi : MonoBehaviour
 	private Animator myAnimator;
 	private Transform myTransform;
 
+	//Destructable 2D parameters
+	public LayerMask Layers = -1;
+	
+	public Texture2D StampTex;
+	
+	public Vector2 Size = Vector2.one;
+	
+	public float Angle;
+	
+	public float Hardness = 1.0f;
+
+
 	#region singleton
 	private static Wasabi instance;
 	public static Wasabi Instance
@@ -26,7 +38,6 @@ public class Wasabi : MonoBehaviour
 		get { return instance; }
 	}
 	#endregion
-
 	// Use this for initialization
 	void Start () 
 	{
@@ -100,6 +111,12 @@ public class Wasabi : MonoBehaviour
 
 	public void Explode()
 	{
+		var ray      = Camera.main.ScreenPointToRay(Input.mousePosition);
+		var distance = D2D_Helper.Divide(ray.origin.z, ray.direction.z);
+		var point    = ray.origin - ray.direction * distance;
+		
+		D2D_Destructible.StampAll(point, Size, Angle, StampTex, Hardness, Layers);
+
 		//call delegate
 		if(OnExplode != null)
 			OnExplode(myTransform.position, force);

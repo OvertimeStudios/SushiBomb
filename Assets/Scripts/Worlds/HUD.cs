@@ -79,9 +79,10 @@ public class HUD : MonoBehaviour
 
 	public void OnRestart()
 	{
-		OnResume ();
+		Application.LoadLevel (Application.loadedLevel);
+		//OnResume ();
 
-		GameController.Instance.Reset ();
+		//GameController.Instance.Reset ();
 	}
 
 	public void OnResume()

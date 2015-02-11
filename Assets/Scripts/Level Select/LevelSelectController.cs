@@ -7,6 +7,8 @@ public class LevelSelectController : MonoBehaviour
 
 	private GameObject currentWorld;
 
+	public static int moveToLevel;
+
 	private static bool navioMoving;
 
 	#region get/set
@@ -45,6 +47,11 @@ public class LevelSelectController : MonoBehaviour
 		Transform currentLevel = currentWorld.transform.FindChild("Levels").FindChild("Level " + (int)Global.currentLevel);
 
 		navio.transform.position = currentLevel.FindChild ("Waypoint").position;
+
+		if(moveToLevel > 0)
+		{
+			//TODO: move to next level
+		}
 	}
 
 	public void TweenNavio()

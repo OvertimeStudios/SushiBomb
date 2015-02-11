@@ -46,6 +46,23 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_AutoSpriteCollider_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_Context.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_Damageable_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_DestructibleSprite_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_DetachableSprite_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_DynamicMass_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_EdgeSpriteCollider_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_ExplosionForce_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_ExplosionStamp_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_Fixture_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_Fracturer_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_PolygonSpriteCollider_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_QuadFracturer_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_Splittable_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_SpriteCollider_Editor.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Editor\D2D_SwappableSprite_Editor.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Editor\InvDatabaseInspector.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Editor\InvFindItem.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\ActiveAnimationEditor.cs" />
@@ -141,19 +158,23 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 2.shader" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Masked Colored.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 3.shader" />
+     <None Include="Assets\Destructible2D\Examples\Shaders\Destructible2D-Gradient.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (TextureClip).shader" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Header.txt" />
+     <None Include="Assets\Destructible2D\Required\Shaders\Sprites-Outline (Destructible 2D).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 1.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 3.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Normal.txt" />
+     <None Include="Assets\Destructible2D\Required\Shaders\Sprites-Default (Destructible 2D).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 2.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 3.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 2.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 1.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 1.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored.shader" />
+     <None Include="Assets\Destructible2D\Required\Shaders\Sprites-Keep Alpha (Destructible 2D).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
@@ -162,6 +183,7 @@
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Additive Colored.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Shaders\Refractive.shader" />
+     <None Include="Assets\Destructible2D\Examples\Shaders\Destructible2D-VertexColours.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (TextureClip).shader" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Depth.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Normal.txt" />

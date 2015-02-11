@@ -136,7 +136,9 @@ public class GameController : MonoBehaviour
 
 		gameOver = false;
 
-		if(OnGameOver != null)
-			OnGameOver();
+		Application.LoadLevel (Application.loadedLevel);
+
+		/*if(OnGameOver != null)
+			OnGameOver();*/
 	}
 }
