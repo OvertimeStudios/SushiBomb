@@ -45,9 +45,17 @@ public class Level : MonoBehaviour
 		string levelName = gameObject.name;
 		int level = int.Parse(levelName.Substring (levelName.Length - 1, 1));
 
-		Global.currentWorld = Global.Worlds.World1;
-		Global.currentLevel = (Global.Levels)level;
+		//if selection a level that ship is current in
+		if((Global.Levels)level == Global.currentLevel)
+		{
+			LevelSelectController.Instance.LoadLevel();
+		}
+		else
+		{
+			Global.currentWorld = Global.Worlds.World1;
+			Global.currentLevel = (Global.Levels)level;
 
-		LevelSelectController.Instance.TweenNavio ();
+			LevelSelectController.Instance.TweenNavio ();
+		}
 	}
 }

@@ -24,6 +24,7 @@ public class Character : MonoBehaviour
 	//optimizations
 	private Transform myTransform;
 	private Rigidbody2D myRigidbody2D;
+	private Animator myAnimator;
 
 	//Reset
 	private Vector3 initialPosition;
@@ -33,6 +34,7 @@ public class Character : MonoBehaviour
 	{
 		myTransform = transform;
 		myRigidbody2D = rigidbody2D;
+		myAnimator = GetComponent<Animator> ();
 
 		initialPosition = myTransform.position;
 
@@ -79,6 +81,8 @@ public class Character : MonoBehaviour
 
 				initialRotation = myTransform.rotation.eulerAngles.z;
 
+				myAnimator.SetInteger ("State", 0);
+
 				//call delegate
 				if(OnCharacterStopMoving != null)
 					OnCharacterStopMoving();
@@ -101,12 +105,15 @@ public class Character : MonoBehaviour
 
 	public void HideAim()
 	{
+		myAnimator.SetInteger ("State", 0);
 		trajectoryHolder.gameObject.SetActive (false);
 	}
 
 	public void ShowAim()
 	{
+		myAnimator.SetInteger ("State", 1);
 		trajectoryHolder.gameObject.SetActive (true);
+
 	}
 
 	public void CalculateAim(Vector3 wasabiPosition, float force)
@@ -176,6 +183,7 @@ public class Character : MonoBehaviour
 	//called on Wasabi.cs
 	public void Explode(Vector3 wasabiPosition, float force)
 	{
+		myAnimator.SetInteger ("State", 2);
 		myRigidbody2D.velocity = ApplyVelocity (wasabiPosition, force);
 
 		if(myRigidbody2D.velocity == Vector2.zero) return;
@@ -198,6 +206,7 @@ public class Character : MonoBehaviour
 	{
 		if(col.gameObject.name == "Chest")
 		{
+			myAnimator.SetInteger ("State", 0);
 			//call delegate
 			if(OnCharacterEnter != null)
 				OnCharacterEnter(gameObject);
@@ -231,6 +240,7 @@ public class Character : MonoBehaviour
 
 	private void Reset()
 	{
+		myAnimator.SetInteger ("State", 0);
 		myTransform.position = initialPosition;
 		myTransform.rotation = Quaternion.identity;
 		initialRotation = -90f;
