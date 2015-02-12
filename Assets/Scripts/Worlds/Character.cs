@@ -40,6 +40,8 @@ public class Character : MonoBehaviour
 
 		trajectoryHolder = transform.FindChild ("Trajectory");
 		layerMask = LayerMask.NameToLayer ("Characters");
+	
+		GetComponent<AudioSource> ().volume = SoundController.soundFXVolume;	
 
 		HideAim ();
 	}
@@ -82,7 +84,7 @@ public class Character : MonoBehaviour
 				initialRotation = myTransform.rotation.eulerAngles.z;
 
 				myAnimator.SetInteger ("State", 0);
-
+				GetComponent<AudioSource> ().Stop ();
 				//call delegate
 				if(OnCharacterStopMoving != null)
 					OnCharacterStopMoving();
@@ -183,11 +185,12 @@ public class Character : MonoBehaviour
 	//called on Wasabi.cs
 	public void Explode(Vector3 wasabiPosition, float force)
 	{
-		myAnimator.SetInteger ("State", 2);
 		myRigidbody2D.velocity = ApplyVelocity (wasabiPosition, force);
 
 		if(myRigidbody2D.velocity == Vector2.zero) return;
 
+		GetComponent<AudioSource> ().Play ();
+		myAnimator.SetInteger ("State", 2);
 		manualRotation = true;
 		moving = true;
 
@@ -206,6 +209,7 @@ public class Character : MonoBehaviour
 	{
 		if(col.gameObject.name == "Chest")
 		{
+			Debug.Log(col);
 			myAnimator.SetInteger ("State", 0);
 			//call delegate
 			if(OnCharacterEnter != null)

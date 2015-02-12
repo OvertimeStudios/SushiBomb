@@ -243,6 +243,7 @@
      <Compile Include="Assets\Scripts\Menu\OnAnimationFinished.cs" />
      <Compile Include="Assets\Scripts\Misc\AnimationEvents.cs" />
      <Compile Include="Assets\Scripts\Misc\Global.cs" />
+     <Compile Include="Assets\Scripts\Misc\SoundController.cs" />
      <Compile Include="Assets\Scripts\Worlds\Character.cs" />
      <Compile Include="Assets\Scripts\Worlds\Chest.cs" />
      <Compile Include="Assets\Scripts\Worlds\GameController.cs" />

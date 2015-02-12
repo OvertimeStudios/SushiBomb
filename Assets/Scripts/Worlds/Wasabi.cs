@@ -18,6 +18,7 @@ public class Wasabi : MonoBehaviour
 	private SpriteRenderer spRenderer;
 	private Animator myAnimator;
 	private Transform myTransform;
+	private AudioSource myAudioSource;
 
 	//Destructable 2D parameters
 	public LayerMask Layers = -1;
@@ -29,6 +30,10 @@ public class Wasabi : MonoBehaviour
 	public float Angle;
 	
 	public float Hardness = 1.0f;
+
+	//audio
+	public AudioClip loopFX;
+	public AudioClip explosionFX;
 
 
 	#region singleton
@@ -46,6 +51,7 @@ public class Wasabi : MonoBehaviour
 		spRenderer = GetComponent<SpriteRenderer>();
 		myAnimator = GetComponent<Animator> ();
 		myTransform = transform;
+		myAudioSource = GetComponent<AudioSource> ();
 
 		spRenderer.enabled = false;
 	}
@@ -82,11 +88,23 @@ public class Wasabi : MonoBehaviour
 		if(GameController.AreSushisMoving) return;
 		if(GameController.IsPaused) return;
 
+		//play sound
+		myAudioSource.clip = loopFX;
+		myAudioSource.loop = true;
+		myAudioSource.Stop ();
+		myAudioSource.Play ();
+
 		//call delegate
 		if(OnClick != null)
 			OnClick ();
 
 		spRenderer.enabled = true;
+
+		Vector3 pos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+		pos.z = 0;
+		myTransform.position = pos;
+
+		GetComponent<AudioSource> ().volume = SoundController.soundFXVolume;
 
 		myAnimator.Play ("Aparecendo");
 	}
@@ -120,6 +138,12 @@ public class Wasabi : MonoBehaviour
 		//call delegate
 		if(OnExplode != null)
 			OnExplode(myTransform.position, force);
+
+		//play sound
+		myAudioSource.clip = explosionFX;
+		myAudioSource.loop = false;
+		myAudioSource.Stop ();
+		myAudioSource.Play ();
 	}
 
 	public void FinishExplosion()

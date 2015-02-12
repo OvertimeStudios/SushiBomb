@@ -30,6 +30,15 @@ public class MainMenuScreen : MonoBehaviour
 	void Start()
 	{
 		instance = this;
+
+		StartCoroutine (EnsureSoundControllerExist ());
+	}
+
+	IEnumerator EnsureSoundControllerExist()
+	{
+		yield return SoundController.Instance == null;
+
+		SoundController.Instance.PlayMusic (SoundController.Musics.MainMenuTheme);
 	}
 
 	void Update()
@@ -68,6 +77,9 @@ public class MainMenuScreen : MonoBehaviour
 			credits.SetActive(false);
 			options.SetActive(true);
 			options.transform.FindChild ("Menu").gameObject.SetActive (true);
+
+			options.transform.FindChild("Menu").FindChild("Music").GetComponent<UISlider>().value = SoundController.musicVolume;
+			options.transform.FindChild("Menu").FindChild("SoundFX").GetComponent<UISlider>().value = SoundController.soundFXVolume;
 		}
 
 		if(currentScreen == Screen.Main)
@@ -121,16 +133,16 @@ public class MainMenuScreen : MonoBehaviour
 	public void ResetData()
 	{
 		//TODO: confirmation popup
-		PlayerPrefs.DeleteAll ();
+		Global.ClearData ();
 	}
 
 	public void OnSoundFXChanged()
 	{
-
+		SoundController.Instance.SetSoundFXVolume ();
 	}
 
 	public void OnMusicChanged()
 	{
-
+		SoundController.Instance.SetMusicVolume ();
 	}
 }

@@ -11,6 +11,6 @@ public class AnimationEvents : MonoBehaviour
 
 	public void VictoryFinished()
 	{
-		HUD.Instance.PlayPlacaAnimation (false);
+		HUD.Instance.PlayPlacaAnimationVictory ();
 	}
 }

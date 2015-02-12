@@ -61,6 +61,9 @@ public class LevelSelectController : MonoBehaviour
 				TweenNavio();
 			}
 		}
+		else
+			SoundController.Instance.PlayMusic (SoundController.Musics.MainMenuTheme);
+
 	}
 
 	public void TweenNavio()

@@ -32,9 +32,17 @@ public class Chest : MonoBehaviour
 
 		initialPosition = transform.position;
 
+		GetComponent<AudioSource> ().volume = SoundController.soundFXVolume;
+
 		back.SetActive (false);
 		front.SetActive (false);
 		anim.SetActive (true);
+	}
+
+	void Start()
+	{
+		Debug.Log ("Start Chest");
+		sushisInside.Clear ();
 	}
 
 	void OnEnable()
@@ -103,14 +111,15 @@ public class Chest : MonoBehaviour
 		anim.SetActive (true);
 
 		animator.SetBool ("CanClose", true);
+
+		//play sound
+		GetComponent<AudioSource> ().Play ();
 	}
 
 	//called in the end of Chest Closing animation as an event
 	public void ChestClosed()
 	{
 		//TODO: Call end game popup
-		Debug.Log ("Call end game popup");
-
 		HUD.Instance.PlayVictoryAnimation ();
 	}
 

@@ -82,6 +82,16 @@ public class Global : MonoBehaviour
 		Global.coins [key] = Mathf.Max (PlayerPrefs.GetInt (key), coins);
 	}
 
+	public static void ClearData()
+	{
+		PlayerPrefs.DeleteAll ();
+
+		levels.Clear ();
+		coins.Clear ();
+
+		LoadValues ();
+	}
+
 	public enum Worlds
 	{
 		World1 = 1,

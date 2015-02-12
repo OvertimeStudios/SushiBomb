@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using UnityEditor;
 
 public class GameController : MonoBehaviour 
 {
@@ -9,9 +10,8 @@ public class GameController : MonoBehaviour
 	public static event Action OnGameOver;
 	public static event Action OnAllCharactersStopMoving;
 	#endregion
-
-	[HideInInspector]
-	public Transform currentWorld;
+	
+	public Transform currentLevel;
 
 	/// <summary>
 	/// How much sushis player need to put inside the chest?
@@ -23,6 +23,9 @@ public class GameController : MonoBehaviour
 	private static Character[] charactersInGame;
 	public static bool gameOver;
 	public static bool paused;
+
+	public bool isEditor = false;
+	public int startLevel = 1;
 
 	#region singleton
 	private static GameController instance;
@@ -60,20 +63,21 @@ public class GameController : MonoBehaviour
 		gameOver = false;
 		paused = false;
 
-		Debug.Log (Global.currentWorld);
-		Debug.Log (Global.currentLevel);
+		Global.currentWorld = (Global.Worlds)int.Parse(Application.loadedLevelName.Substring(Application.loadedLevelName.Length - 1, 1));
 
-		if (Global.currentWorld == 0)
-		{
-			Global.currentWorld = Global.Worlds.World1;
+		if(Global.currentLevel != 0)
+			Global.currentLevel = (isEditor) ? (Global.Levels)startLevel : Global.currentLevel;
+		else
 			Global.currentLevel = Global.Levels.Level1;
-		}
-		
-		currentWorld = GameObject.Find("Levels").transform.FindChild ("Level " + (int)Global.currentLevel).transform;
 
-		currentWorld.gameObject.SetActive (true);
+		currentLevel = GameObject.Find("Levels").transform.FindChild ("Level " + (int)Global.currentLevel).transform;
 
-		charactersInGame = currentWorld.GetComponentsInChildren<Character> ();
+		currentLevel.gameObject.SetActive (true);
+
+		charactersInGame = currentLevel.GetComponentsInChildren<Character> ();
+
+		SoundController.Instance.PlayMusic ((SoundController.Musics)((int)Global.currentWorld));
+		SoundController.Instance.PlayAmbientSound ((SoundController.AmbientSounds)((int)Global.currentWorld));
 	}
 
 	void OnEnable()
