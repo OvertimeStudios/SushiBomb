@@ -33,7 +33,7 @@ public class Character : MonoBehaviour
 	protected virtual void Start () 
 	{
 		myTransform = transform;
-		myRigidbody2D = rigidbody2D;
+		myRigidbody2D = GetComponent<Rigidbody2D>();
 		myAnimator = GetComponent<Animator> ();
 
 		initialPosition = myTransform.position;
@@ -84,7 +84,7 @@ public class Character : MonoBehaviour
 				initialRotation = myTransform.rotation.eulerAngles.z;
 
 				myAnimator.SetInteger ("State", 0);
-				GetComponent<AudioSource> ().Stop ();
+				//GetComponent<AudioSource> ().Stop ();
 				//call delegate
 				if(OnCharacterStopMoving != null)
 					OnCharacterStopMoving();
@@ -189,7 +189,7 @@ public class Character : MonoBehaviour
 
 		if(myRigidbody2D.velocity == Vector2.zero) return;
 
-		GetComponent<AudioSource> ().Play ();
+		//GetComponent<AudioSource> ().Play ();
 		myAnimator.SetInteger ("State", 2);
 		manualRotation = true;
 		moving = true;

@@ -66,7 +66,7 @@ public class MainMenuScreen : MonoBehaviour
 
 		currentScreen = Screen.Options;
 
-		options.transform.FindChild ("options").animation.Play ("OptionsIn");
+		options.transform.FindChild ("options").GetComponent<Animation>().Play ("OptionsIn");
 	}
 
 	//finished animation, show menu
@@ -101,7 +101,7 @@ public class MainMenuScreen : MonoBehaviour
 
 		currentScreen = Screen.Credits;
 
-		credits.transform.FindChild ("credits").animation.Play ("CreditsIn");
+		credits.transform.FindChild ("credits").GetComponent<Animation>().Play ("CreditsIn");
 	}
 
 	public void OnAchievementsClicked()
@@ -115,7 +115,7 @@ public class MainMenuScreen : MonoBehaviour
 		{
 			currentScreen = Screen.Main;
 
-			options.transform.FindChild ("options").animation.Play ("OptionsOut");
+			options.transform.FindChild ("options").GetComponent<Animation>().Play ("OptionsOut");
 
 			options.transform.FindChild ("Menu").gameObject.SetActive (false);
 		}
@@ -124,7 +124,7 @@ public class MainMenuScreen : MonoBehaviour
 		{
 			currentScreen = Screen.Options;
 
-			credits.transform.FindChild ("credits").animation.Play ("CreditsOut");
+			credits.transform.FindChild ("credits").GetComponent<Animation>().Play ("CreditsOut");
 			
 			credits.transform.FindChild ("Menu").gameObject.SetActive (false);
 		}

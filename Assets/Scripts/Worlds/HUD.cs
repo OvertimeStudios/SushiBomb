@@ -139,7 +139,7 @@ public class HUD : MonoBehaviour
 		victory.SetActive (false);
 
 		string anim = (placa.transform.position.y > 1f) ? "PlacaIn" : "PlacaOut";
-		placa.animation.Play (anim);
+		placa.GetComponent<Animation>().Play (anim);
 	}
 
 	public void PlayPlacaAnimationVictory()
@@ -149,13 +149,13 @@ public class HUD : MonoBehaviour
 		nextLevel.SetActive (true);
 		
 		string anim = (placa.transform.position.y > 1f) ? "PlacaVictoryIn" : "PlacaVictoryOut";
-		placa.animation.Play (anim);
+		placa.GetComponent<Animation>().Play (anim);
 	}
 
 	public void PlayVictoryAnimation()
 	{
-		victory.animation.Rewind ();
-		victory.animation.Play ("VictoryIn");
+		victory.GetComponent<Animation>().Rewind ();
+		victory.GetComponent<Animation>().Play ("VictoryIn");
 
 		if(!victory.activeSelf)
 		{
