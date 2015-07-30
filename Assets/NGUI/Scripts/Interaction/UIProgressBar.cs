@@ -132,7 +132,7 @@ public class UIProgressBar : UIWidgetContainer
 				{
 					ForceUpdate();
 
-					if (current == null && NGUITools.GetActive(this) && EventDelegate.IsValid(onChange))
+					if (NGUITools.GetActive(this) && EventDelegate.IsValid(onChange))
 					{
 						current = this;
 						EventDelegate.Execute(onChange);
@@ -355,6 +355,7 @@ public class UIProgressBar : UIWidgetContainer
 	public virtual void ForceUpdate ()
 	{
 		mIsDirty = false;
+		bool turnOff = false;
 
 		if (mFG != null)
 		{
@@ -377,7 +378,8 @@ public class UIProgressBar : UIWidgetContainer
 					mFG.drawRegion = isInverted ?
 						new Vector4(1f - value, 0f, 1f, 1f) :
 						new Vector4(0f, 0f, value, 1f);
-					mFG.enabled = value > 0.001f;
+					mFG.enabled = true;
+					turnOff = value < 0.001f;
 				}
 			}
 			else if (sprite != null && sprite.type == UIBasicSprite.Type.Filled)
@@ -395,7 +397,8 @@ public class UIProgressBar : UIWidgetContainer
 				mFG.drawRegion = isInverted ?
 					new Vector4(0f, 1f - value, 1f, 1f) :
 					new Vector4(0f, 0f, 1f, value);
-				mFG.enabled = value > 0.001f;
+				mFG.enabled = true;
+				turnOff = value < 0.001f;
 			}
 		}
 
@@ -430,6 +433,8 @@ public class UIProgressBar : UIWidgetContainer
 				SetThumbPosition(Vector3.Lerp(v0, v1, isInverted ? 1f - value : value));
 			}
 		}
+
+		if (turnOff) mFG.enabled = false;
 	}
 
 	/// <summary>
@@ -452,5 +457,47 @@ public class UIProgressBar : UIWidgetContainer
 		}
 		else if (Vector3.Distance(thumb.position, worldPos) > 0.00001f)
 			thumb.position = worldPos;
+	}
+
+	/// <summary>
+	/// Watch for key events and adjust the value accordingly.
+	/// </summary>
+
+	public virtual void OnPan (Vector2 delta)
+	{
+		if (enabled)
+		{
+			switch (mFill)
+			{
+				case FillDirection.LeftToRight:
+				{
+					float after = Mathf.Clamp01(mValue + delta.x);
+					value = after;
+					mValue = after;
+					break;
+				}
+				case FillDirection.RightToLeft:
+				{
+					float after = Mathf.Clamp01(mValue - delta.x);
+					value = after;
+					mValue = after;
+					break;
+				}
+				case FillDirection.BottomToTop:
+				{
+					float after = Mathf.Clamp01(mValue + delta.y);
+					value = after;
+					mValue = after;
+					break;
+				}
+				case FillDirection.TopToBottom:
+				{
+					float after = Mathf.Clamp01(mValue - delta.y);
+					value = after;
+					mValue = after;
+					break;
+				}
+			}
+		}
 	}
 }
