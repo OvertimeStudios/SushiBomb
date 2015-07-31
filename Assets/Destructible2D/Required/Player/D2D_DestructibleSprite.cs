@@ -8,8 +8,6 @@ public class D2D_DestructibleSprite : D2D_Destructible
 {
 	public static List<D2D_DestructibleSprite> DestructibleSprites = new List<D2D_DestructibleSprite>();
 	
-	public Material SourceMaterial;
-	
 	[D2D_RangeAttribute(1.0f, 100.0f)]
 	public float Sharpness = 1.0f;
 	
@@ -22,8 +20,22 @@ public class D2D_DestructibleSprite : D2D_Destructible
 	[SerializeField]
 	private Vector2 expectedPivot;
 	
-	[SerializeField]
-	private Material clonedMaterial;
+	private static Material defaultMaterial;
+	
+	private static MaterialPropertyBlock propertyBlock;
+	
+	public Material DefaultMaterial
+	{
+		get
+		{
+			if (defaultMaterial == null)
+			{
+				defaultMaterial = Resources.Load<Material>("Sprites-Default (Destructible 2D)");
+			}
+			
+			return defaultMaterial;
+		}
+	}
 	
 	public override Matrix4x4 WorldToPixelMatrix
 	{
@@ -66,21 +78,32 @@ public class D2D_DestructibleSprite : D2D_Destructible
 		Sharpness = 1.0f;
 	}
 	
-	protected override void OnEnable()
+	protected virtual void Awake()
 	{
-		base.OnEnable();
+		if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 		
-		// Has this been cloned?
-		if (clonedMaterial != null)
+		var material = spriteRenderer.sharedMaterial;
+		
+		// Replace Sprites-Default with Sprites-Default (Destructible 2D)?
+		if (material != null)
 		{
-			foreach (var destructibleSprite in DestructibleSprites)
+			if (material.HasProperty("_AlphaTex") == false)
 			{
-				if (destructibleSprite != null && destructibleSprite.clonedMaterial == clonedMaterial)
+				if (material.name == "Sprites-Default")
 				{
-					OnDuplicate();
+					spriteRenderer.sharedMaterial = DefaultMaterial;
 				}
 			}
 		}
+		else
+		{
+			spriteRenderer.sharedMaterial = DefaultMaterial;
+		}
+	}
+	
+	protected override void OnEnable()
+	{
+		base.OnEnable();
 		
 		DestructibleSprites.Add(this);
 	}
@@ -109,63 +132,25 @@ public class D2D_DestructibleSprite : D2D_Destructible
 #endif
 	}
 	
-	protected override void OnDestroy()
-	{
-		base.OnDestroy();
-		
-		DestroyMaterial();
-	}
-	
 	protected virtual void OnWillRenderObject()
 	{
 		if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 		
-		UpdateSourceMaterial();
-		
-		DestroyMaterialIfSettingsDiffer();
-		
 		var sprite = spriteRenderer.sprite;
 		
-		if (SourceMaterial != null && sprite != null)
+		if (sprite != null)
 		{
-			// Clone new material?
-			if (clonedMaterial == null)
-			{
-				clonedMaterial = D2D_Helper.Clone(SourceMaterial, false);
-			}
-			else
-			{
-				clonedMaterial.CopyPropertiesFromMaterial(SourceMaterial);
-			}
+			if (propertyBlock == null) propertyBlock = new MaterialPropertyBlock();
 			
-			clonedMaterial.hideFlags = HideFlags.HideInInspector;
+			propertyBlock.Clear();
 			
-			D2D_Helper.BeginStealthSet(clonedMaterial);
-			{
-				clonedMaterial.SetTexture("_MainTex", sprite.texture);
-				clonedMaterial.SetTexture("_AlphaTex", AlphaTex);
-				clonedMaterial.SetVector("_AlphaScale", CalculateAlphaScale(sprite));
-				clonedMaterial.SetVector("_AlphaOffset", CalculateAlphaOffset(sprite));
-				clonedMaterial.SetFloat("_Sharpness", Sharpness);
-			}
-			D2D_Helper.EndStealthSet();
-		}
-		
-		if (spriteRenderer.sharedMaterial != clonedMaterial)
-		{
-			spriteRenderer.sharedMaterial = clonedMaterial;
-		}
-	}
-	
-	protected virtual void OnDuplicate()
-	{
-		if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
-		
-		if (clonedMaterial == spriteRenderer.sharedMaterial)
-		{
-			clonedMaterial = D2D_Helper.Clone(clonedMaterial);
+			propertyBlock.SetTexture("_MainTex", sprite.texture);
+			propertyBlock.SetTexture("_AlphaTex", AlphaTex);
+			propertyBlock.SetVector("_AlphaScale", CalculateAlphaScale(sprite));
+			propertyBlock.SetVector("_AlphaOffset", CalculateAlphaOffset(sprite));
+			propertyBlock.SetFloat("_Sharpness", Sharpness);
 			
-			spriteRenderer.sharedMaterial = clonedMaterial;
+			spriteRenderer.SetPropertyBlock(propertyBlock);
 		}
 	}
 	
@@ -192,31 +177,6 @@ public class D2D_DestructibleSprite : D2D_Destructible
 		return new Vector2(offsetX, offsetY);
 	}
 	
-	private void UpdateSourceMaterial()
-	{
-		// Do we need to set a source material?
-		if (SourceMaterial == null)
-		{
-			if (spriteRenderer.sharedMaterial != null)
-			{
-				SourceMaterial = spriteRenderer.sharedMaterial;
-			}
-			else
-			{
-				SourceMaterial = Resources.Load<Material>("Sprites-Default (Destructible 2D)");
-			}
-		}
-		
-		// Replace Sprites-Default with Sprites-Default (Destructible 2D)?
-		if (SourceMaterial != null && SourceMaterial.HasProperty("_AlphaTex") == false)
-		{
-			if (SourceMaterial.name == "Sprites-Default")
-			{
-				SourceMaterial = Resources.Load<Material>("Sprites-Default (Destructible 2D)");
-			}
-		}
-	}
-	
 	public Vector3 CalculateAlphaTexScale()
 	{
 		if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
@@ -226,7 +186,7 @@ public class D2D_DestructibleSprite : D2D_Destructible
 		
 		if (AlphaTex != null && sprite != null)
 		{
-			scale.x = D2D_Helper.Divide(sprite.bounds.size.x, sprite.rect.width ) * D2D_Helper.Divide(Mathf.Floor(sprite.textureRect.width ) + AlphaShiftX, AlphaWidth) * D2D_Helper.Divide(AlphaWidth, OriginalWidth );
+			scale.x = D2D_Helper.Divide(sprite.bounds.size.x, sprite.rect.width ) * D2D_Helper.Divide(Mathf.Floor(sprite.textureRect.width ) + AlphaShiftX, AlphaWidth ) * D2D_Helper.Divide(AlphaWidth , OriginalWidth );
 			scale.y = D2D_Helper.Divide(sprite.bounds.size.y, sprite.rect.height) * D2D_Helper.Divide(Mathf.Floor(sprite.textureRect.height) + AlphaShiftY, AlphaHeight) * D2D_Helper.Divide(AlphaHeight, OriginalHeight);
 		}
 		
@@ -250,28 +210,5 @@ public class D2D_DestructibleSprite : D2D_Destructible
 		}
 		
 		return offset;
-	}
-	
-	private void DestroyMaterialIfSettingsDiffer()
-	{
-		if (clonedMaterial != null)
-		{
-			if (SourceMaterial == null)
-			{
-				DestroyMaterial(); return;
-			}
-			
-			if (clonedMaterial.shader != SourceMaterial.shader)
-			{
-				DestroyMaterial(); return;
-			}
-		}
-	}
-	
-	private void DestroyMaterial()
-	{
-		D2D_Helper.Destroy(clonedMaterial);
-		
-		clonedMaterial = null;
 	}
 }

@@ -71,6 +71,7 @@ public static class D2D_ColliderBuilder
 	
 	private static int pixelsW;
 	
+	// Go through all pixels in the defined area, convert them into cells, and find the lines that pass through the 0.5 opacity threshold
 	public static void Calculate(D2D_Destructible destructible, int newXMin, int newXMax, int newYMin, int newYMax, bool cutEdges, bool binary)
 	{
 		cellCount      = 0;
@@ -167,6 +168,7 @@ public static class D2D_ColliderBuilder
 					{
 						TraceEdges(cell, point);
 						
+						TrimLoop();
 						WeldLines();
 						OptimizeEdges(detail);
 						
@@ -387,6 +389,8 @@ public static class D2D_ColliderBuilder
 	{
 		tracedEdges.Clear();
 		
+		point.Other.Used = true;
+		
 		TraceEdge(cell, point, false);
 		TraceEdge(cell, point.Other, true);
 	}
@@ -443,6 +447,21 @@ public static class D2D_ColliderBuilder
 					
 					TraceEdge(cell, outerPoint.Other, last);
 				}
+			}
+		}
+	}
+	
+	// If this traced edge is a loop, then remove the last point
+	private static void TrimLoop()
+	{
+		if (tracedEdges.Count > 2)
+		{
+			var a = tracedEdges.First;
+			var b = tracedEdges.Last;
+			
+			if (a.Value.Position == b.Value.Position)
+			{
+				tracedEdges.Remove(b);
 			}
 		}
 	}

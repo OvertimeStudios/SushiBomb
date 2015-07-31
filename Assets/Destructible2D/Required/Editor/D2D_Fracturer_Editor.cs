@@ -17,5 +17,7 @@ public abstract class D2D_Fracturer_Editor<T> : D2D_Editor<T>
 			DrawDefault("Count");
 		}
 		EndError();
+		
+		DrawDefault("Blur");
 	}
 }

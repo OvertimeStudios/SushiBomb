@@ -2,16 +2,20 @@ Shader "Sprites/Outline (Destructible 2D)"
 {
 	Properties
 	{
-		_MainTex ("Sprite Texture", 2D) = "white" {}
-		_AlphaTex ("Alpha Tex", 2D) = "white" {}
-		_AlphaScale ("Alpha Scale", Vector) = (1,1,0,0)
-		_AlphaOffset ("Alpha Offset", Vector) = (0,0,0,0)
-		_Sharpness ("Sharpness", Float) = 1.0
+		[PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
 		_Color ("Tint", Color) = (1,1,1,1)
+		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
+		
+		// D2D
+		[PerRendererData] _AlphaTex ("Alpha Tex", 2D) = "white" {}
+		[PerRendererData] _AlphaScale ("Alpha Scale", Vector) = (1,1,0,0)
+		[PerRendererData] _AlphaOffset ("Alpha Offset", Vector) = (0,0,0,0)
+		[PerRendererData] _Sharpness ("Sharpness", Float) = 1.0
+		
+		// Outline
 		_OutlineColor ("Outline", Color) = (0,0,0,1)
 		_OutlineThreshold("Outline Threshold", Float) = 0.35
 		_AlphaThreshold("Alpha Threshold", Float) = 0.65
-		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 	}
 
 	SubShader
@@ -41,11 +45,15 @@ Shader "Sprites/Outline (Destructible 2D)"
 				#include "UnityCG.cginc"
 				
 				sampler2D _MainTex;
+				float4    _Color;
+				
+				// D2D
 				sampler2D _AlphaTex;
 				float     _Sharpness;
-				float4    _Color;
 				float2    _AlphaScale;
 				float2    _AlphaOffset;
+				
+				// Outline
 				float4    _OutlineColor;
 				float     _OutlineThreshold;
 				float     _AlphaThreshold;

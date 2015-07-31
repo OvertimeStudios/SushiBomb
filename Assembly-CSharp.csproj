@@ -258,6 +258,7 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Masked 1.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 2.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Masked 2.shader" />
+     <None Include="Assets\Destructible2D\Required\Shaders\Sprites-Diffuse (Destructible 2D).shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo20.txt" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo14.txt" />

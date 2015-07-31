@@ -7,6 +7,8 @@ public class D2D_QuadFracturer : D2D_Fracturer
 	[D2D_RangeAttribute(0.0f, 0.5f)]
 	public float Irregularity = 0.25f;
 	
+	public int BlurSteps = 1;
+	
 	private static List<D2D_Quad> quads = new List<D2D_Quad>();
 	
 	protected override void DoFracture()

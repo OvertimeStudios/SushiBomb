@@ -64,7 +64,9 @@ public class GameController : MonoBehaviour
 
 		Global.currentWorld = (Global.Worlds)int.Parse(Application.loadedLevelName.Substring(Application.loadedLevelName.Length - 1, 1));
 
-		if(Global.currentLevel != 0)
+		if(isEditor)
+			Global.currentLevel = (Global.Levels)startLevel;
+		else if(Global.currentLevel != 0)
 			Global.currentLevel = (isEditor) ? (Global.Levels)startLevel : Global.currentLevel;
 		else
 			Global.currentLevel = Global.Levels.Level1;

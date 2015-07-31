@@ -114,7 +114,7 @@ public class D2D_Splittable : MonoBehaviour
 		{
 			D2D_SplitBuilder.DiscardTinyBits(MinPixels);
 			
-			D2D_SplitBuilder.EndSplitting(SplitOrder);
+			D2D_SplitBuilder.EndSplitting(SplitOrder, false);
 		}
 		
 		BusySplitting = false;

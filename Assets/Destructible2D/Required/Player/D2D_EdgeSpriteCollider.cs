@@ -78,7 +78,7 @@ public class D2D_EdgeSpriteCollider : D2D_SpriteCollider
 	public int CellSize = 64;
 	
 	[D2D_RangeAttribute(0.5f, 1.0f)]
-	public float Detail = 1.0f;
+	public float Detail = 0.9f;
 	
 	public bool Binary;
 	
@@ -127,8 +127,8 @@ public class D2D_EdgeSpriteCollider : D2D_SpriteCollider
 			
 			var cellXMin = xMin / CellSize;
 			var cellYMin = yMin / CellSize;
-			var cellXMax = (xMax + CellSize - 1) / CellSize;
-			var cellYMax = (yMax + CellSize - 1) / CellSize;
+			var cellXMax = (xMax + 1) / CellSize;
+			var cellYMax = (yMax + 1) / CellSize;
 			
 			for (var cellY = cellYMin; cellY <= cellYMax; cellY++)
 			{

@@ -11,7 +11,7 @@ public class GameControllerEditor : Editor
 
 		myScript.sushisToWin = EditorGUILayout.IntField ("Sushis To Win", myScript.sushisToWin);
 
-		myScript.isEditor = GUILayout.Toggle(myScript.isEditor, "Are you testing?");
+		myScript.isEditor = GUILayout.Toggle(myScript.isEditor, "Testing Mode " + ((myScript.isEditor) ? "Enabled" : "Disabled"));
 		
 		if(myScript.isEditor)
 			myScript.startLevel = EditorGUILayout.IntField("Start Level", myScript.startLevel);

@@ -9,6 +9,8 @@ public abstract class D2D_Fracturer : MonoBehaviour
 	
 	public int Count = 6;
 	
+	public bool Blur = true;
+	
 	public static bool BusyFracturing;
 	
 	protected D2D_Destructible destructible;
@@ -37,7 +39,7 @@ public abstract class D2D_Fracturer : MonoBehaviour
 		{
 			DoFracture();
 		}
-		D2D_SplitBuilder.EndSplitting(D2D_SplitOrder.Default);
+		D2D_SplitBuilder.EndSplitting(D2D_SplitOrder.Default, Blur);
 	}
 	
 	protected virtual void OnDestructibleValidSplit(D2D_SplitData splitData)

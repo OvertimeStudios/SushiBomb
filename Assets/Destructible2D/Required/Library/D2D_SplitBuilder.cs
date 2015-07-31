@@ -187,7 +187,7 @@ public static class D2D_SplitBuilder
 		}
 	}
 	
-	public static void EndSplitting(D2D_SplitOrder order)
+	public static void EndSplitting(D2D_SplitOrder order, bool blur)
 	{
 		if (destructible != null)
 		{
@@ -228,12 +228,12 @@ public static class D2D_SplitBuilder
 						
 						destructible.AlphaData = tempAlphaData;
 						
-						Split(clonedDestructible, group, true);
+						Split(clonedDestructible, group, true, blur);
 					}
 					// Overwrite original
 					else
 					{
-						Split(destructible, group, false);
+						Split(destructible, group, false, blur);
 					}
 				}
 			}
@@ -248,7 +248,7 @@ public static class D2D_SplitBuilder
 		D2D_ClassPool<D2D_SplitGroup>.Add(Groups, g => g.AddToPool());
 	}
 	
-	private static void Split(D2D_Destructible destructible, D2D_SplitGroup group, bool isClone)
+	private static void Split(D2D_Destructible destructible, D2D_SplitGroup group, bool isClone, bool blur)
 	{
 		var subX      = group.XMin;
 		var subY      = group.YMin;
@@ -269,6 +269,18 @@ public static class D2D_SplitBuilder
 		}
 		
 		destructible.SubsetAlphaWith(subAlpha, subWidth, subHeight, subX, subY);
+		
+		if (blur == true)
+		{
+			var destructibleSprite = destructible as D2D_DestructibleSprite;
+			
+			if (destructibleSprite != null)
+			{
+				destructibleSprite.Sharpness *= 2.0f;
+			}
+			
+			destructible.BlurAlphaTex();
+		}
 		
 		// Split notification
 		D2D_Helper.BroadcastMessage(destructible.transform, "OnDestructibleSplit", splitData, SendMessageOptions.DontRequireReceiver);

@@ -10,22 +10,6 @@ public class D2D_DestructibleSprite_Editor : D2D_Editor<D2D_DestructibleSprite>
 		DrawAlphaTex();
 		DrawDefault("DensityTex");
 		
-		BeginError(Any(t => t.SourceMaterial == null));
-		{
-			DrawDefault("SourceMaterial");
-		}
-		EndError();
-		
-		if (Any(t => t.SourceMaterial != null && AssetDatabase.Contains(t.SourceMaterial) == false))
-		{
-			EditorGUILayout.HelpBox("This material isn't an asset, so you won't be able to store this Destructible Sprite in a prefab.", MessageType.Warning);
-		}
-		
-		if (Any(t => t.SourceMaterial != null && t.SourceMaterial.HasProperty("_AlphaTex") == false))
-		{
-			EditorGUILayout.HelpBox("This material lacks the _AlphaTex property, so it will not render correctly.", MessageType.Error);
-		}
-		
 		DrawDefault("Sharpness");
 		
 		DrawDefault("Indestructible");
@@ -57,6 +41,31 @@ public class D2D_DestructibleSprite_Editor : D2D_Editor<D2D_DestructibleSprite>
 				EditorGUILayout.Slider("Solid Pixel Ratio", Target.SolidPixelRatio, 0.0f, 1.0f);
 			}
 			EditorGUI.EndDisabledGroup();
+			
+			var spriteRenderer = Target.GetComponent<SpriteRenderer>();
+			
+			if (spriteRenderer != null)
+			{
+				var material = spriteRenderer.sharedMaterial;
+				
+				if (material != null)
+				{
+					if (material.HasProperty("_AlphaTex") == false)
+					{
+						EditorGUILayout.HelpBox("Material does not have a _AlphaTex texture property. It is required for D2D_DestructibleSprite.", MessageType.Warning);
+					}
+					
+					if (material.HasProperty("_AlphaScale") == false)
+					{
+						EditorGUILayout.HelpBox("Material does not have a _AlphaScale texture property. It is required for D2D_DestructibleSprite.", MessageType.Warning);
+					}
+					
+					if (material.HasProperty("_AlphaOffset") == false)
+					{
+						EditorGUILayout.HelpBox("Material does not have a _AlphaOffset texture property. It is required for D2D_DestructibleSprite.", MessageType.Warning);
+					}
+				}
+			}
 		}
 	}
 	
