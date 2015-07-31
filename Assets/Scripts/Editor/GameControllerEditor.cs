@@ -9,8 +9,6 @@ public class GameControllerEditor : Editor
 	{
 		GameController myScript = target as GameController;
 
-		myScript.sushisToWin = EditorGUILayout.IntField ("Sushis To Win", myScript.sushisToWin);
-
 		myScript.isEditor = GUILayout.Toggle(myScript.isEditor, "Testing Mode " + ((myScript.isEditor) ? "Enabled" : "Disabled"));
 		
 		if(myScript.isEditor)
