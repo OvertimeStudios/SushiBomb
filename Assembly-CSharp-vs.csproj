@@ -252,6 +252,7 @@
      <Compile Include="Assets\Scripts\Worlds\GameController.cs" />
      <Compile Include="Assets\Scripts\Worlds\HUD.cs" />
      <Compile Include="Assets\Scripts\Worlds\Hosso.cs" />
+     <Compile Include="Assets\Scripts\Worlds\LevelGameplay.cs" />
      <Compile Include="Assets\Scripts\Worlds\Wasabi.cs" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\ReadMe - 3.7.8.txt" />

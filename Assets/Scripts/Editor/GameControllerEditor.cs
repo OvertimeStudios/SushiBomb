@@ -15,6 +15,5 @@ public class GameControllerEditor : Editor
 		
 		if(myScript.isEditor)
 			myScript.startLevel = EditorGUILayout.IntField("Start Level", myScript.startLevel);
-		
 	}
 }

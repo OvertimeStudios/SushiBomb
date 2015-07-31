@@ -74,6 +74,7 @@ public class GameController : MonoBehaviour
 		currentLevel = GameObject.Find("Levels").transform.FindChild ("Level " + (int)Global.currentLevel).transform;
 
 		currentLevel.gameObject.SetActive (true);
+		sushisToWin = currentLevel.GetComponent<LevelGameplay> ().sushisToWin;
 
 		charactersInGame = currentLevel.GetComponentsInChildren<Character> ();
 
