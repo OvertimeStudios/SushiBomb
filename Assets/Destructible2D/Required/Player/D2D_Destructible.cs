@@ -549,6 +549,8 @@ public abstract class D2D_Destructible : MonoBehaviour
 				}
 				
 				NotifyChanges(xMin, xMax, yMin, yMax);
+
+				D2D_Helper.BroadcastMessage(transform, "OnDestructibleStamped", SendMessageOptions.DontRequireReceiver);
 			}
 		}
 	}

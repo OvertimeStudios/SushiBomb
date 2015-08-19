@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
 	/// How much sushis player need to put inside the chest?
 	/// </summary>
 	public int sushisToWin = 0;
+	public float secondsToRestart = 2f;
 
 	private static int sushisMoving;
 	private static int sushisFallen;
@@ -86,14 +87,16 @@ public class GameController : MonoBehaviour
 	{
 		Character.OnCharacterStartMoving += SushiExploded;
 		Character.OnCharacterStopMoving += SushiStopped;
-		Character.OnOutOfScreen += SushiOutOfScreen;
+		Character.OnOutOfScreen += SushiOutOfGame;
+		Character.OnEaten += SushiOutOfGame;
 	}
 
 	void OnDisable()
 	{
 		Character.OnCharacterStartMoving -= SushiExploded;
 		Character.OnCharacterStopMoving -= SushiStopped;
-		Character.OnOutOfScreen -= SushiOutOfScreen;
+		Character.OnOutOfScreen -= SushiOutOfGame;
+		Character.OnEaten -= SushiOutOfGame;
 	}
 
 	public void SushiStopped()
@@ -123,19 +126,21 @@ public class GameController : MonoBehaviour
 		sushisMoving++;
 	}
 
-	public void SushiOutOfScreen()
+	public void SushiOutOfGame()
 	{
 		sushisFallen++;
 		sushisMoving--;
 
 		if(RemainingSushis < sushisToWin)
 		{
-			Reset ();
+			StartCoroutine(Reset ());
 		}
 	}
 
-	public void Reset()
+	public IEnumerator Reset()
 	{
+		yield return new WaitForSeconds(secondsToRestart);
+
 		sushisMoving = 0;
 		sushisFallen = 0;
 		paused = false;
