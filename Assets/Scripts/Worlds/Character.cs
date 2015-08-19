@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
 	public static event Action OnCharacterStartMoving;
 	public static event Action OnCharacterStopMoving;
 	public static event Action OnOutOfScreen;
+	public static event Action OnEaten;
 	#endregion
 
 	private Transform trajectoryHolder;
@@ -52,6 +53,7 @@ public class Character : MonoBehaviour
 		Wasabi.OnRelease += HideAim;
 		Wasabi.OnMoving += CalculateAim;
 		Wasabi.OnExplode += Explode;
+		ExplodableObject.OnExplode += Explode;
 
 		GameController.OnGameOver += Reset;
 	}
@@ -62,6 +64,7 @@ public class Character : MonoBehaviour
 		Wasabi.OnRelease -= HideAim;
 		Wasabi.OnMoving -= CalculateAim;
 		Wasabi.OnExplode -= Explode;
+		ExplodableObject.OnExplode -= Explode;
 
 		GameController.OnGameOver -= Reset;
 	}
@@ -207,13 +210,22 @@ public class Character : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
+		Debug.Log(col.gameObject.name);
+
 		if(col.gameObject.name == "Chest")
 		{
-			Debug.Log(col);
 			myAnimator.SetInteger ("State", 0);
 			//call delegate
 			if(OnCharacterEnter != null)
 				OnCharacterEnter(gameObject);
+		}
+
+		if(col.gameObject.layer == LayerMask.NameToLayer("Planta"))
+		{
+			if(OnEaten != null)
+				OnEaten();
+
+			Destroy(gameObject, 0.1f);
 		}
 	}
 

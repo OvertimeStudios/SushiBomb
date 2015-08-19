@@ -9,6 +9,8 @@ public class GameControllerEditor : Editor
 	{
 		GameController myScript = target as GameController;
 
+		myScript.secondsToRestart = EditorGUILayout.FloatField("Seconds To Reset", myScript.secondsToRestart);
+
 		myScript.isEditor = GUILayout.Toggle(myScript.isEditor, "Testing Mode " + ((myScript.isEditor) ? "Enabled" : "Disabled"));
 		
 		if(myScript.isEditor)

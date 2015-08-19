@@ -41,7 +41,6 @@ public class Chest : MonoBehaviour
 
 	void Start()
 	{
-		Debug.Log ("Start Chest");
 		sushisInside.Clear ();
 	}
 

@@ -1,10 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Editor/GameControllerEditor.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Worlds/Planta.cs">
     <Files>
-      <File FileName="Assets/Scripts/Worlds/LevelGameplay.cs" Line="24" Column="19" />
-      <File FileName="Assets/Scripts/Worlds/GameController.cs" Line="77" Column="73" />
-      <File FileName="Assets/Scripts/Editor/GameControllerEditor.cs" Line="10" Column="54" />
+      <File FileName="Assets/Scripts/Worlds/Planta.cs" Line="22" Column="38" />
+      <File FileName="Assets/Scripts/Worlds/Character.cs" Line="228" Column="30" />
+      <File FileName="Assets/Scripts/Worlds/GameController.cs" Line="19" Column="36" />
+      <File FileName="Assets/Scripts/Worlds/Hosso.cs" Line="6" Column="2" />
+      <File FileName="Assets/Scripts/Editor/GameControllerEditor.cs" Line="12" Column="28" />
+      <File FileName="Assets/Scripts/Misc/SoundController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
