@@ -25,7 +25,7 @@ public class Global : MonoBehaviour
 
 		for(byte world = 1; world <= 3; world++)
 		{
-			for(byte level = 1; level <= 9; level++)
+			for(byte level = 1; level <= 12; level++)
 			{
 				//get levels unlocked
 				string key = "level" + world + "_" + level;
