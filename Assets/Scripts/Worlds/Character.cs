@@ -11,6 +11,7 @@ public class Character : MonoBehaviour
 	public static event Action OnCharacterStopMoving;
 	public static event Action OnOutOfScreen;
 	public static event Action OnEaten;
+	public static event Action OnCaught;
 	#endregion
 
 	private Transform trajectoryHolder;
@@ -210,8 +211,6 @@ public class Character : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		Debug.Log(col.gameObject.name);
-
 		if(col.gameObject.name == "Chest")
 		{
 			myAnimator.SetInteger ("State", 0);
@@ -226,6 +225,17 @@ public class Character : MonoBehaviour
 				OnEaten();
 
 			Destroy(gameObject, 0.1f);
+		}
+
+		if(col.gameObject.layer == LayerMask.NameToLayer("Bat"))
+		{
+			if(OnCaught != null)
+				OnCaught();
+
+			transform.rotation = Quaternion.identity;
+			myRigidbody2D.isKinematic = true;
+
+			enabled = false;
 		}
 	}
 

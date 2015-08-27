@@ -247,8 +247,10 @@
      <Compile Include="Assets\Scripts\Misc\AnimationEvents.cs" />
      <Compile Include="Assets\Scripts\Misc\Global.cs" />
      <Compile Include="Assets\Scripts\Misc\SoundController.cs" />
+     <Compile Include="Assets\Scripts\Worlds\Bat.cs" />
      <Compile Include="Assets\Scripts\Worlds\Character.cs" />
      <Compile Include="Assets\Scripts\Worlds\Chest.cs" />
+     <Compile Include="Assets\Scripts\Worlds\Ebi.cs" />
      <Compile Include="Assets\Scripts\Worlds\ExplodableObject.cs" />
      <Compile Include="Assets\Scripts\Worlds\GameController.cs" />
      <Compile Include="Assets\Scripts\Worlds\HUD.cs" />

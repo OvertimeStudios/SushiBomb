@@ -89,6 +89,7 @@ public class GameController : MonoBehaviour
 		Character.OnCharacterStopMoving += SushiStopped;
 		Character.OnOutOfScreen += SushiOutOfGame;
 		Character.OnEaten += SushiOutOfGame;
+		Character.OnCaught += SushiOutOfGame;
 	}
 
 	void OnDisable()
@@ -97,6 +98,7 @@ public class GameController : MonoBehaviour
 		Character.OnCharacterStopMoving -= SushiStopped;
 		Character.OnOutOfScreen -= SushiOutOfGame;
 		Character.OnEaten -= SushiOutOfGame;
+		Character.OnCaught -= SushiOutOfGame;
 	}
 
 	public void SushiStopped()

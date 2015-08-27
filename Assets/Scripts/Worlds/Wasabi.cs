@@ -129,7 +129,7 @@ public class Wasabi : MonoBehaviour
 
 	public void Explode()
 	{
-		var ray      = Camera.main.ScreenPointToRay(Input.mousePosition);
+		var ray      = Camera.main.ScreenPointToRay(Camera.main.WorldToScreenPoint(transform.position));
 		var distance = D2D_Helper.Divide(ray.origin.z, ray.direction.z);
 		var point    = ray.origin - ray.direction * distance;
 		
