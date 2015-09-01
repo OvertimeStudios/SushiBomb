@@ -101,6 +101,7 @@
      <Compile Include="Assets\Destructible2D\Required\Player\D2D_QuadFracturer.cs" />
      <Compile Include="Assets\Destructible2D\Required\Player\D2D_Splittable.cs" />
      <Compile Include="Assets\Destructible2D\Required\Player\D2D_SpriteCollider.cs" />
+     <Compile Include="Assets\Destructible2D\Required\Player\D2D_SpriteSnapshot.cs" />
      <Compile Include="Assets\Destructible2D\Required\Player\D2D_SwappableSprite.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />

@@ -49,10 +49,11 @@ public class D2D_DestructibleSprite : D2D_Destructible
 				
 				if (sprite != null)
 				{
-					var scale  = CalculateAlphaTexScale();
-					var offset = CalculateAlphaTexOffset();
-					var s      = D2D_Helper.ScalingMatrix(D2D_Helper.Reciprocal(scale));
-					var t      = D2D_Helper.TranslationMatrix(-offset);
+					var scale        = CalculateAlphaTexScale();
+					var inverseScale = new Vector3(D2D_Helper.Reciprocal(scale.x), D2D_Helper.Reciprocal(scale.y), 1.0f);
+					var offset       = CalculateAlphaTexOffset();
+					var s            = D2D_Helper.ScalingMatrix(inverseScale);
+					var t            = D2D_Helper.TranslationMatrix(-offset);
 					
 					return s * t * transform.worldToLocalMatrix;
 				}
@@ -177,11 +178,11 @@ public class D2D_DestructibleSprite : D2D_Destructible
 		return new Vector2(offsetX, offsetY);
 	}
 	
-	public Vector3 CalculateAlphaTexScale()
+	public Vector2 CalculateAlphaTexScale()
 	{
 		if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 		
-		var scale  = Vector3.one;
+		var scale  = Vector2.one;
 		var sprite = spriteRenderer.sprite;
 		
 		if (AlphaTex != null && sprite != null)
@@ -193,11 +194,11 @@ public class D2D_DestructibleSprite : D2D_Destructible
 		return scale;
 	}
 	
-	public Vector3 CalculateAlphaTexOffset()
+	public Vector2 CalculateAlphaTexOffset()
 	{
 		if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 		
-		var offset = Vector3.one;
+		var offset = Vector2.one;
 		var sprite = spriteRenderer.sprite;
 		
 		if (AlphaTex != null && sprite != null)

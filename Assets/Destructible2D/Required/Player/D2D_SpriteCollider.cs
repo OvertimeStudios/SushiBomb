@@ -38,17 +38,21 @@ public abstract class D2D_SpriteCollider : MonoBehaviour
 		
 		alphaTex = destructibleSprite.AlphaTex;
 		
-		var colliderScale  = destructibleSprite.CalculateAlphaTexScale();
-		var colliderOffset = destructibleSprite.CalculateAlphaTexOffset();
+		var localPosition   = child.transform.localPosition;
+		var localScale      = child.transform.localScale;
+		var colliderScale   = destructibleSprite.CalculateAlphaTexScale();
+		var colliderScale3  = new Vector3(colliderScale.x, colliderScale.y, localScale.z);
+		var colliderOffset  = destructibleSprite.CalculateAlphaTexOffset();
+		var colliderOffset3 = new Vector3(colliderOffset.x, colliderOffset.y, localPosition.z);
 		
-		if (child.transform.localPosition != colliderOffset)
+		if (localPosition != colliderOffset3)
 		{
-			child.transform.localPosition = colliderOffset;
+			child.transform.localPosition = colliderOffset3;
 		}
 		
-		if (child.transform.localScale != colliderScale)
+		if (localScale != colliderScale3)
 		{
-			child.transform.localScale = colliderScale;
+			child.transform.localScale = colliderScale3;
 		}
 	}
 	
