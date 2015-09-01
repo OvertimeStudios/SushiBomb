@@ -4,8 +4,79 @@ using System.Collections.Generic;
 
 public class Global : MonoBehaviour 
 {
+	public const string CURRENT_WORLD = "currentWorld";
+	public const string CURRENT_LEVEL = "currentLevel";
+	public const int maxLevel = 12;
+
+	public enum Worlds
+	{
+		World1 = 1,
+		World2,
+		World3,
+	}
+	
+	public enum Levels
+	{
+		Level1 = 1,
+		Level2,
+		Level3,
+		Level4,
+		Level5,
+		Level6,
+		Level7,
+		Level8,
+		Level9,
+		Level10,
+		Level11,
+		Level12,
+	}
+
 	private static Dictionary<string, int> levels;
 	private static Dictionary<string, int> coins;
+
+	private static Worlds currentWorld;
+	private static Levels currentLevel;
+
+	private static bool isLoaded = false;
+
+	#region get / set
+	public static Worlds CurrentWorld
+	{
+		get 
+		{
+			if(!isLoaded)
+				LoadValues();
+
+			return currentWorld;
+		}
+		set
+		{
+			currentWorld = value;
+
+			PlayerPrefs.SetInt(CURRENT_WORLD, (int)value);
+			PlayerPrefs.Save();
+
+		}
+	}
+
+	public static Levels CurrentLevel
+	{
+		get 
+		{
+			if(!isLoaded)
+				LoadValues();
+			
+			return currentLevel;
+		}
+		set
+		{
+			currentLevel = value;
+
+			PlayerPrefs.SetInt(CURRENT_LEVEL, (int)value);
+			PlayerPrefs.Save();
+		}
+	}
+	#endregion
 
 	public static void LoadValues()
 	{
@@ -16,6 +87,9 @@ public class Global : MonoBehaviour
 
 			PlayerPrefs.SetInt("level1_1", 1);
 			PlayerPrefs.SetInt("coins1_1", 0);
+
+			CurrentWorld = Worlds.World1;
+			CurrentLevel = Levels.Level1;
 
 			PlayerPrefs.Save();
 		}
@@ -36,6 +110,11 @@ public class Global : MonoBehaviour
 
 			}
 		}
+
+		CurrentWorld = (Worlds)PlayerPrefs.GetInt(CURRENT_WORLD);
+		CurrentLevel = (Levels)PlayerPrefs.GetInt(CURRENT_LEVEL);
+
+		isLoaded = true;
 	}
 
 	public static bool GetLevelUnlocked(int world, int level)
@@ -70,7 +149,11 @@ public class Global : MonoBehaviour
 			LoadValues();
 
 		//unlock next level
-		string key = "level" + world + "_" + (level + 1);
+		string key;
+		if(level == maxLevel)
+			key = "level" + (world + 1) + "_1";
+		else
+			key = "level" + world + "_" + (level + 1);
 
 		PlayerPrefs.SetInt (key, 1);
 		Global.levels [key] = 1;
@@ -86,33 +169,13 @@ public class Global : MonoBehaviour
 	{
 		PlayerPrefs.DeleteAll ();
 
-		levels.Clear ();
+		if(levels != null)
+			levels.Clear ();
+
+		if(coins != null)
 		coins.Clear ();
 
+		isLoaded = false;
 		LoadValues ();
 	}
-
-	public enum Worlds
-	{
-		World1 = 1,
-		World2,
-		World3,
-	}
-
-	public enum Levels
-	{
-		Level1 = 1,
-		Level2,
-		Level3,
-		Level4,
-		Level5,
-		Level6,
-		Level7,
-		Level8,
-		Level9,
-		Level10
-	}
-
-	public static Worlds currentWorld;
-	public static Levels currentLevel;
 }

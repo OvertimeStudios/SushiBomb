@@ -11,6 +11,8 @@ public class LevelSelectController : MonoBehaviour
 
 	private static bool navioMoving;
 
+	private Transform worlds;
+
 	#region get/set
 	public static bool IsNavioMoving
 	{
@@ -32,19 +34,24 @@ public class LevelSelectController : MonoBehaviour
 		instance = this;
 		navioMoving = false;
 
-		if(Global.currentWorld == 0)
+		if(Global.CurrentWorld == 0)
 		{
-			Global.currentWorld = Global.Worlds.World1;
-			Global.currentLevel = Global.Levels.Level1;
+			Global.CurrentWorld = Global.Worlds.World1;
+			Global.CurrentLevel = Global.Levels.Level1;
 		}
 
-		currentWorld = GameObject.Find ("World " + (int)Global.currentWorld);
+		worlds = GameObject.Find("Worlds").transform;
+
+		foreach(Transform world in worlds)
+			world.gameObject.SetActive(false);
+
+		currentWorld = worlds.GetChild((int)Global.CurrentWorld - 1).gameObject;
 
 		currentWorld.SetActive (true);
 
 		navio = GameObject.Find("Navio").transform;
 
-		Transform currentLevel = currentWorld.transform.FindChild("Levels").FindChild("Level " + (int)Global.currentLevel);
+		Transform currentLevel = currentWorld.transform.FindChild("Levels").FindChild("Level " + (int)Global.CurrentLevel);
 
 		navio.transform.position = currentLevel.FindChild ("Waypoint").position;
 
@@ -52,11 +59,11 @@ public class LevelSelectController : MonoBehaviour
 		{
 			moveToNextLevel = false;
 
-			int nextLevel = (int)Global.currentLevel + 1;
+			int nextLevel = (int)Global.CurrentLevel + 1;
 
 			if(nextLevel <= currentWorld.transform.FindChild("Levels").childCount)
 			{
-				Global.currentLevel = (Global.Levels)(nextLevel);
+				Global.CurrentLevel = (Global.Levels)(nextLevel);
 
 				TweenNavio();
 			}
@@ -75,7 +82,7 @@ public class LevelSelectController : MonoBehaviour
 
 		navioTween.from = navio.localPosition;
 
-		Transform levelTo = currentWorld.transform.FindChild("Levels").FindChild("Level " + (int)Global.currentLevel);
+		Transform levelTo = currentWorld.transform.FindChild("Levels").FindChild("Level " + (int)Global.CurrentLevel);
 
 		navioTween.to = levelTo.localPosition + levelTo.FindChild ("Waypoint").localScale;
 
@@ -91,7 +98,15 @@ public class LevelSelectController : MonoBehaviour
 
 	public void LoadLevel()
 	{
-		Application.LoadLevel ("World " + (int)Global.currentWorld);
+		Application.LoadLevel ("World " + (int)Global.CurrentWorld);
+	}
+
+	public void LoadWorld(Global.Worlds world)
+	{
+		Global.CurrentWorld = world;
+		Global.CurrentLevel = Global.Levels.Level1;
+
+		Application.LoadLevel(Application.loadedLevel);
 	}
 
 }

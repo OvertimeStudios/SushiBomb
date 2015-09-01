@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
 	public static event Action OnAllCharactersStopMoving;
 	#endregion
 	
-	public Transform currentLevel;
+	public Transform CurrentLevel;
 
 	/// <summary>
 	/// How much sushis player need to put inside the chest?
@@ -63,24 +63,24 @@ public class GameController : MonoBehaviour
 		gameOver = false;
 		paused = false;
 
-		Global.currentWorld = (Global.Worlds)int.Parse(Application.loadedLevelName.Substring(Application.loadedLevelName.Length - 1, 1));
+		Global.CurrentWorld = (Global.Worlds)int.Parse(Application.loadedLevelName.Substring(Application.loadedLevelName.Length - 1, 1));
 
 		if(isEditor)
-			Global.currentLevel = (Global.Levels)startLevel;
-		else if(Global.currentLevel != 0)
-			Global.currentLevel = (isEditor) ? (Global.Levels)startLevel : Global.currentLevel;
+			Global.CurrentLevel = (Global.Levels)startLevel;
+		else if(Global.CurrentLevel != 0)
+			Global.CurrentLevel = (isEditor) ? (Global.Levels)startLevel : Global.CurrentLevel;
 		else
-			Global.currentLevel = Global.Levels.Level1;
+			Global.CurrentLevel = Global.Levels.Level1;
 
-		currentLevel = GameObject.Find("Levels").transform.FindChild ("Level " + (int)Global.currentLevel).transform;
+		CurrentLevel = GameObject.Find("Levels").transform.FindChild ("Level " + (int)Global.CurrentLevel).transform;
 
-		currentLevel.gameObject.SetActive (true);
-		sushisToWin = currentLevel.GetComponent<LevelGameplay> ().sushisToWin;
+		CurrentLevel.gameObject.SetActive (true);
+		sushisToWin = CurrentLevel.GetComponent<LevelGameplay> ().sushisToWin;
 
-		charactersInGame = currentLevel.GetComponentsInChildren<Character> ();
+		charactersInGame = CurrentLevel.GetComponentsInChildren<Character> ();
 
-		SoundController.Instance.PlayMusic ((SoundController.Musics)((int)Global.currentWorld));
-		SoundController.Instance.PlayAmbientSound ((SoundController.AmbientSounds)((int)Global.currentWorld));
+		SoundController.Instance.PlayMusic ((SoundController.Musics)((int)Global.CurrentWorld));
+		SoundController.Instance.PlayAmbientSound ((SoundController.AmbientSounds)((int)Global.CurrentWorld));
 	}
 
 	void OnEnable()
@@ -115,7 +115,7 @@ public class GameController : MonoBehaviour
 				gameOver = true;
 
 				//TODO: coins conditions for each level
-				Global.LevelComplete((int)Global.currentWorld, (int)Global.currentLevel, 1);
+				Global.LevelComplete((int)Global.CurrentWorld, (int)Global.CurrentLevel, 1);
 
 				if(OnGameComplete != null)
 					OnGameComplete();

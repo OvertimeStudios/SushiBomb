@@ -240,6 +240,7 @@
      <Compile Include="Assets\NGUI\Scripts\UI\UITexture.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
+     <Compile Include="Assets\Scripts\Level Select\ChangeWorld.cs" />
      <Compile Include="Assets\Scripts\Level Select\Level.cs" />
      <Compile Include="Assets\Scripts\Level Select\LevelSelectController.cs" />
      <Compile Include="Assets\Scripts\Menu\MainMenuScreen.cs" />
