@@ -1,6 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
+Project("{CAE3C814-FA1F-F906-0B6F-80C808D9A6CE}") = "Sushi Bomb", "Assembly-CSharp-firstpass.csproj", "{49D4F204-6168-C945-0996-DFA73E1FBD00}"
+EndProject
 Project("{CAE3C814-FA1F-F906-0B6F-80C808D9A6CE}") = "Sushi Bomb", "Assembly-CSharp.csproj", "{C3673B8F-FD98-FD2A-A851-C26F23733296}"
 EndProject
 Project("{CAE3C814-FA1F-F906-0B6F-80C808D9A6CE}") = "Sushi Bomb", "Assembly-CSharp-Editor.csproj", "{E39ACE20-EDB2-0AB5-D414-97A62DDF856B}"
@@ -11,6 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49D4F204-6168-C945-0996-DFA73E1FBD00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49D4F204-6168-C945-0996-DFA73E1FBD00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49D4F204-6168-C945-0996-DFA73E1FBD00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49D4F204-6168-C945-0996-DFA73E1FBD00}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3673B8F-FD98-FD2A-A851-C26F23733296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3673B8F-FD98-FD2A-A851-C26F23733296}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3673B8F-FD98-FD2A-A851-C26F23733296}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -23,7 +29,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																																																		GlobalSection(MonoDevelopProperties) = preSolution
+																																																																																				GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
