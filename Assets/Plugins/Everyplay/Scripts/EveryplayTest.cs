@@ -21,6 +21,8 @@ public class EveryplayTest : MonoBehaviour
 
     void Start()
     {
+		Everyplay.SetLowMemoryDevice(true);
+
         if (uploadStatusLabel != null)
         {
             Everyplay.UploadDidStart += UploadDidStart;
@@ -47,6 +49,9 @@ public class EveryplayTest : MonoBehaviour
 
     private void RecordingStarted()
     {
+		Debug.Log("Everyplay.IsSupported(): " + Everyplay.IsSupported());
+		Debug.Log("Everyplay.IsRecordingSupported(): " + Everyplay.IsRecordingSupported());
+
         isRecording = true;
         isPaused = false;
         isRecordingFinished = false;
@@ -162,6 +167,9 @@ public class EveryplayTest : MonoBehaviour
 
         if (isRecordingFinished && GUI.Button(new Rect(10, 172, 138, 48), "Show sharing modal"))
         {
+			Everyplay.SetMetadata("level_name", "level 1.1");
+			Everyplay.SetMetadata("score", 1);
+
             Everyplay.ShowSharingModal();
             #if UNITY_EDITOR
             Debug.Log("The sharing modal is not available in the Unity editor. Please compile and run on a device.");
