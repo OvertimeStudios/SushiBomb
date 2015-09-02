@@ -5,6 +5,7 @@ using System.Collections;
 public class GameController : MonoBehaviour 
 {
 	#region events
+	public static event Action OnGameStarted;
 	public static event Action OnGameComplete;
 	public static event Action OnGameOver;
 	public static event Action OnAllCharactersStopMoving;
@@ -81,6 +82,9 @@ public class GameController : MonoBehaviour
 
 		SoundController.Instance.PlayMusic ((SoundController.Musics)((int)Global.CurrentWorld));
 		SoundController.Instance.PlayAmbientSound ((SoundController.AmbientSounds)((int)Global.CurrentWorld));
+
+		if(OnGameStarted != null)
+			OnGameStarted();
 	}
 
 	void OnEnable()
@@ -151,7 +155,10 @@ public class GameController : MonoBehaviour
 
 		Application.LoadLevel (Application.loadedLevel);
 
-		/*if(OnGameOver != null)
-			OnGameOver();*/
+		if(OnGameOver != null)
+			OnGameOver();
+
+		if(OnGameStarted != null)
+			OnGameStarted();
 	}
 }

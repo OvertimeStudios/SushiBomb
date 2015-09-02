@@ -1,6 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Plugins/Everyplay/Scripts/EveryplayTest.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Level Select/LevelSelectController.cs" Line="101" Column="63" />
+      <File FileName="Assets/Scripts/Level Select/Level.cs" Line="19" Column="3" />
+      <File FileName="Assets/Plugins/Everyplay/Scripts/EveryplayTest.cs" Line="23" Column="6" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

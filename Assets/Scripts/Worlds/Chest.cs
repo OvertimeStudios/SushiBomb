@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 public class Chest : MonoBehaviour 
 {
+	#region events
+	public static event Action OnClosed;
+	#endregion
+
 	private GameObject back;
 	private GameObject front;
 	private GameObject anim;
@@ -118,7 +123,9 @@ public class Chest : MonoBehaviour
 	//called in the end of Chest Closing animation as an event
 	public void ChestClosed()
 	{
-		//TODO: Call end game popup
+		if(OnClosed != null)
+			OnClosed();
+
 		HUD.Instance.PlayVictoryAnimation ();
 	}
 

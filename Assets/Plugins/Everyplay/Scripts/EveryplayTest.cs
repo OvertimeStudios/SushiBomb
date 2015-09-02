@@ -21,7 +21,7 @@ public class EveryplayTest : MonoBehaviour
 
     void Start()
     {
-		Everyplay.SetLowMemoryDevice(true);
+		//Everyplay.SetLowMemoryDevice(true);
 
         if (uploadStatusLabel != null)
         {

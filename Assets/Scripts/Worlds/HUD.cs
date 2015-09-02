@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class HUD : MonoBehaviour 
 {
@@ -172,5 +173,14 @@ public class HUD : MonoBehaviour
 			topRight.SetActive(true);
 		}
 
+	}
+
+	public void WatchReplay()
+	{
+		Dictionary<string, object> metadata = new Dictionary<string, object>();
+		metadata.Add("level_name", "level " + (int)Global.CurrentWorld + "." + (int)Global.CurrentLevel);
+		metadata.Add("score", 1);
+
+		EveryplayController.PlayLastRecording(metadata);
 	}
 }
