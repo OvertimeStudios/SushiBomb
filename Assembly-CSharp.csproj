@@ -243,6 +243,7 @@
      <Compile Include="Assets\Scripts\Level Select\ChangeWorld.cs" />
      <Compile Include="Assets\Scripts\Level Select\Level.cs" />
      <Compile Include="Assets\Scripts\Level Select\LevelSelectController.cs" />
+     <Compile Include="Assets\Scripts\Level Select\WorldUnlockAnimation.cs" />
      <Compile Include="Assets\Scripts\Menu\MainMenuScreen.cs" />
      <Compile Include="Assets\Scripts\Menu\OnAnimationFinished.cs" />
      <Compile Include="Assets\Scripts\Misc\AnimationEvents.cs" />

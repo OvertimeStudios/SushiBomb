@@ -67,9 +67,20 @@ public class LevelSelectController : MonoBehaviour
 
 				TweenNavio();
 			}
+			else
+			{
+				//no more levels
+				currentWorld.GetComponent<WorldUnlockAnimation>().Play();
+			}
 		}
 		else
+		{
+			//last level unlocked
+			if(Global.GetLevelUnlocked((int)Global.CurrentWorld, Global.maxLevel))
+				currentWorld.GetComponent<WorldUnlockAnimation>().Play();
+
 			SoundController.Instance.PlayMusic (SoundController.Musics.MainMenuTheme);
+		}
 
 	}
 

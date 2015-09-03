@@ -6,8 +6,11 @@ public class Global : MonoBehaviour
 {
 	public const string CURRENT_WORLD = "currentWorld";
 	public const string CURRENT_LEVEL = "currentLevel";
-	public const int maxLevel = 12;
+	public const string UNLOCK_ANIMATION = "unlockAnimationWorld";
 
+	public const int maxWorld = 3;
+	public const int maxLevel = 12;
+	
 	public enum Worlds
 	{
 		World1 = 1,
@@ -37,6 +40,7 @@ public class Global : MonoBehaviour
 	private static Worlds currentWorld;
 	private static Levels currentLevel;
 
+	public static List<bool> unlockAnimationPlayed;
 	private static bool isLoaded = false;
 
 	#region get / set
@@ -94,11 +98,16 @@ public class Global : MonoBehaviour
 			PlayerPrefs.Save();
 		}
 
+		unlockAnimationPlayed = new List<bool>();
 		levels = new Dictionary<string, int> ();
 		coins = new Dictionary<string, int> ();
 
 		for(byte world = 1; world <= 3; world++)
 		{
+			unlockAnimationPlayed.Add(PlayerPrefs.HasKey(UNLOCK_ANIMATION + world) ? PlayerPrefs.GetInt(UNLOCK_ANIMATION + world) == 1 : false);
+
+			Debug.Log(unlockAnimationPlayed[unlockAnimationPlayed.Count - 1]);
+
 			for(byte level = 1; level <= 12; level++)
 			{
 				//get levels unlocked
@@ -163,6 +172,19 @@ public class Global : MonoBehaviour
 
 		PlayerPrefs.SetInt (key, Mathf.Max (PlayerPrefs.GetInt (key), coins));
 		Global.coins [key] = Mathf.Max (PlayerPrefs.GetInt (key), coins);
+	}
+
+	public static bool GetUnlockAnimationPlayer(Worlds world)
+	{
+		return unlockAnimationPlayed[(int)world - 1];
+	}
+
+	public static void UnlockAnimationPlayed(Worlds world)
+	{
+		unlockAnimationPlayed[(int)world - 1] = true;
+
+		PlayerPrefs.SetInt(UNLOCK_ANIMATION + (int)world, 1);
+		PlayerPrefs.Save();
 	}
 
 	public static void ClearData()
